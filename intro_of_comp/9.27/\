@@ -1,0 +1,45 @@
+/*
+ * Copyright (C) 2023 Letian Lin <yingziyu-Lin@outlook.com>
+ *
+ * Distributed under terms of the GNU AGPLv3+ license.
+ * 
+ * Run for our better future
+ */
+
+#include<stdio.h>
+#include<algorithm>
+#include<string.h>
+#include<math.h>
+using namespace std;
+
+int gety(int t)
+{
+	int y400 = t / (400 * 365 + 100 - 3);
+	t %= (400 * 365 + 97);
+	int y100 = t / (100 * 365 + 24);
+	t %= 100 * 365 + 24;
+	int y4 = t / (4 * 365 + 1);
+	t %= 4 * 365 + 1;
+	int y = 0;
+	if(y > 366) y = 1 ,t -= 366,y += t / 365;
+	else y = 0;
+	return 400 * y400 + 100 * y100 + y4 * 4 + y;
+}
+int main()
+{
+#ifdef llt
+	freopen("15.in","r",stdin);
+	freopen("15.out","w",stdout);
+#endif
+	while(1)
+	{
+		int t;
+		scanf("%d",&t);
+		if(t == -1) break;
+		int y = gety(t);
+		int m = getm(t);
+		int d = getd(t);
+
+
+}
+

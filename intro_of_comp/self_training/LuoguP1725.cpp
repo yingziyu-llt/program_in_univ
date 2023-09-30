@@ -20,20 +20,31 @@ int dp[100010];
 int main()
 {
 #ifdef llt
-	freopen("LuoguP1735.in","r",stdin);
-	freopen("LuoguP1735.out","w",stdout);
+	freopen("LuoguP1725.in","r",stdin);
+	freopen("LuoguP1725.out","w",stdout);
 #endif
 	int n,l,r;
 	scanf("%d%d%d",&n,&l,&r);
 	for(int i = 1;i <= n;i++)
 		scanf("%d",&a[i]);
 	dp[1] = a[1];
-	q.push_back(make_pair(1,a[1]);
+	q.push_back(make_pair(1,a[1]));
 	for(int i = 1;i <= r - l;i++)
 	{
-		if(q.back().second < i)
-			q.push_back(make_pair(i,a[i]));
+		while(!q.empty() && q.back().second < a[i])
+			q.pop_back();
+		q.push_back(make_pair(i,a[i]));
 	}
-
+	for(int i = l;i <= n;i++)
+	{
+		while(!q.empty() && q.back().second > a[i])
+			q.pop_back();
+		while(!q.empty() && q.front().first < i - l)
+			q.pop_front();
+		q.push_back(make_pair(i,a[i]));
+		dp[i] = dp[q.front().first] + a[i];
+	}
+	printf("%d",dp[n]);
+	return 0;
 }
 
