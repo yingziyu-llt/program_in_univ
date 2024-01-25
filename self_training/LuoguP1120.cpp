@@ -20,12 +20,13 @@ int acnt,n;
 bool succ = 0;
 int len = 0;
 int tot = 0;
+int m;
 
 void dfs(int num,int cur,int ret)
 {
 	if(ret == 0)
 	{
-		if(num == tot / len)
+		if(num == m)
 		{
 			succ = 1;
 			return ;
@@ -47,7 +48,9 @@ void dfs(int num,int cur,int ret)
 		dfs(num,i + 1,ret - a[i]);
 		if(succ) return ;
 		used[i] = 0;
+		if(a[i] == ret || ret == len) return ;
 		i = nxt[i];
+		if(i == n) return ;
 
 	}
 }
@@ -68,16 +71,18 @@ int main()
 	}
 	n = acnt;
 	nxt[n] = n;
+	sort(a + 1,a + 1 + n,greater<int>());
 	for(int i = n - 1;i > 0;i--)
 	{
 		if(a[i] == a[i + 1]) nxt[i] = nxt[i + 1];
 		else nxt[i] = i;
 	}
-	sort(a + 1,a + 1 + n,greater<int>());
+	used[1] = 1;
 	for(int i = a[1];i <= tot / 2;i++)
 	{
 		if(tot % i) continue;
 		len = i;
+		m = tot / i;
 		dfs(1,0,i - a[1]);
 		if(succ)
 		{
@@ -85,5 +90,6 @@ int main()
 			return 0;
 		}
 	}
+	printf("%d",tot);
 }
 
