@@ -4,3 +4,5 @@
 *.ans
 *.exe
 .Rproj.user
+__pychache__
+*.pyc
