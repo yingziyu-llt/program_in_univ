@@ -1,0 +1,803 @@
+Files already downloaded and verified
+Files already downloaded and verified
+MLU is not available, use GPU/CPU instead.
+Epoch [1/100], Step [100/782], Loss: 1.7063, Accuracy: 34.38%
+Epoch [1/100], Step [200/782], Loss: 1.6162, Accuracy: 39.06%
+Epoch [1/100], Step [300/782], Loss: 1.5912, Accuracy: 37.50%
+Epoch [1/100], Step [400/782], Loss: 1.3291, Accuracy: 48.44%
+Epoch [1/100], Step [500/782], Loss: 1.4068, Accuracy: 46.88%
+Epoch [1/100], Step [600/782], Loss: 1.4826, Accuracy: 43.75%
+Epoch [1/100], Step [700/782], Loss: 1.3647, Accuracy: 43.75%
+Test Accuracy of the model on the 10000 test images: 59.01 %
+Epoch [2/100], Step [100/782], Loss: 1.0399, Accuracy: 60.94%
+Epoch [2/100], Step [200/782], Loss: 1.0001, Accuracy: 65.62%
+Epoch [2/100], Step [300/782], Loss: 0.9980, Accuracy: 62.50%
+Epoch [2/100], Step [400/782], Loss: 1.1569, Accuracy: 60.94%
+Epoch [2/100], Step [500/782], Loss: 1.0238, Accuracy: 64.06%
+Epoch [2/100], Step [600/782], Loss: 0.9843, Accuracy: 64.06%
+Epoch [2/100], Step [700/782], Loss: 1.0992, Accuracy: 65.62%
+Test Accuracy of the model on the 10000 test images: 67.69 %
+Epoch [3/100], Step [100/782], Loss: 0.7691, Accuracy: 76.56%
+Epoch [3/100], Step [200/782], Loss: 0.6847, Accuracy: 76.56%
+Epoch [3/100], Step [300/782], Loss: 1.1191, Accuracy: 60.94%
+Epoch [3/100], Step [400/782], Loss: 0.6775, Accuracy: 76.56%
+Epoch [3/100], Step [500/782], Loss: 0.7222, Accuracy: 75.00%
+Epoch [3/100], Step [600/782], Loss: 0.7134, Accuracy: 78.12%
+Epoch [3/100], Step [700/782], Loss: 0.7505, Accuracy: 68.75%
+Test Accuracy of the model on the 10000 test images: 73.01 %
+Epoch [4/100], Step [100/782], Loss: 0.6467, Accuracy: 79.69%
+Epoch [4/100], Step [200/782], Loss: 0.2980, Accuracy: 90.62%
+Epoch [4/100], Step [300/782], Loss: 0.5759, Accuracy: 78.12%
+Epoch [4/100], Step [400/782], Loss: 0.6240, Accuracy: 76.56%
+Epoch [4/100], Step [500/782], Loss: 0.7020, Accuracy: 76.56%
+Epoch [4/100], Step [600/782], Loss: 0.7878, Accuracy: 68.75%
+Epoch [4/100], Step [700/782], Loss: 0.4220, Accuracy: 84.38%
+Test Accuracy of the model on the 10000 test images: 75.32 %
+Epoch [5/100], Step [100/782], Loss: 0.5524, Accuracy: 79.69%
+Epoch [5/100], Step [200/782], Loss: 0.3752, Accuracy: 84.38%
+Epoch [5/100], Step [300/782], Loss: 0.7765, Accuracy: 75.00%
+Epoch [5/100], Step [400/782], Loss: 0.4540, Accuracy: 82.81%
+Epoch [5/100], Step [500/782], Loss: 0.5712, Accuracy: 78.12%
+Epoch [5/100], Step [600/782], Loss: 0.4611, Accuracy: 84.38%
+Epoch [5/100], Step [700/782], Loss: 0.6835, Accuracy: 71.88%
+Test Accuracy of the model on the 10000 test images: 77.62 %
+Epoch [6/100], Step [100/782], Loss: 0.5423, Accuracy: 84.38%
+Epoch [6/100], Step [200/782], Loss: 0.3656, Accuracy: 87.50%
+Epoch [6/100], Step [300/782], Loss: 0.5015, Accuracy: 84.38%
+Epoch [6/100], Step [400/782], Loss: 0.4017, Accuracy: 84.38%
+Epoch [6/100], Step [500/782], Loss: 0.5925, Accuracy: 81.25%
+Epoch [6/100], Step [600/782], Loss: 0.4190, Accuracy: 82.81%
+Epoch [6/100], Step [700/782], Loss: 0.4643, Accuracy: 79.69%
+Test Accuracy of the model on the 10000 test images: 77.79 %
+Epoch [7/100], Step [100/782], Loss: 0.5919, Accuracy: 84.38%
+Epoch [7/100], Step [200/782], Loss: 0.4938, Accuracy: 85.94%
+Epoch [7/100], Step [300/782], Loss: 0.3140, Accuracy: 85.94%
+Epoch [7/100], Step [400/782], Loss: 0.4742, Accuracy: 81.25%
+Epoch [7/100], Step [500/782], Loss: 0.3724, Accuracy: 85.94%
+Epoch [7/100], Step [600/782], Loss: 0.2596, Accuracy: 95.31%
+Epoch [7/100], Step [700/782], Loss: 0.2105, Accuracy: 92.19%
+Test Accuracy of the model on the 10000 test images: 78.83 %
+Epoch [8/100], Step [100/782], Loss: 0.2929, Accuracy: 90.62%
+Epoch [8/100], Step [200/782], Loss: 0.3063, Accuracy: 87.50%
+Epoch [8/100], Step [300/782], Loss: 0.3229, Accuracy: 90.62%
+Epoch [8/100], Step [400/782], Loss: 0.3322, Accuracy: 89.06%
+Epoch [8/100], Step [500/782], Loss: 0.4934, Accuracy: 78.12%
+Epoch [8/100], Step [600/782], Loss: 0.2978, Accuracy: 93.75%
+Epoch [8/100], Step [700/782], Loss: 0.1994, Accuracy: 92.19%
+Test Accuracy of the model on the 10000 test images: 79.02 %
+Epoch [9/100], Step [100/782], Loss: 0.2672, Accuracy: 93.75%
+Epoch [9/100], Step [200/782], Loss: 0.3330, Accuracy: 93.75%
+Epoch [9/100], Step [300/782], Loss: 0.3099, Accuracy: 85.94%
+Epoch [9/100], Step [400/782], Loss: 0.1632, Accuracy: 93.75%
+Epoch [9/100], Step [500/782], Loss: 0.1795, Accuracy: 96.88%
+Epoch [9/100], Step [600/782], Loss: 0.2453, Accuracy: 92.19%
+Epoch [9/100], Step [700/782], Loss: 0.2443, Accuracy: 93.75%
+Test Accuracy of the model on the 10000 test images: 78.99 %
+Epoch [10/100], Step [100/782], Loss: 0.0937, Accuracy: 98.44%
+Epoch [10/100], Step [200/782], Loss: 0.0969, Accuracy: 100.00%
+Epoch [10/100], Step [300/782], Loss: 0.1065, Accuracy: 93.75%
+Epoch [10/100], Step [400/782], Loss: 0.0889, Accuracy: 98.44%
+Epoch [10/100], Step [500/782], Loss: 0.1122, Accuracy: 96.88%
+Epoch [10/100], Step [600/782], Loss: 0.1513, Accuracy: 95.31%
+Epoch [10/100], Step [700/782], Loss: 0.2118, Accuracy: 92.19%
+Test Accuracy of the model on the 10000 test images: 78.87 %
+Epoch [11/100], Step [100/782], Loss: 0.1296, Accuracy: 93.75%
+Epoch [11/100], Step [200/782], Loss: 0.1501, Accuracy: 93.75%
+Epoch [11/100], Step [300/782], Loss: 0.1520, Accuracy: 93.75%
+Epoch [11/100], Step [400/782], Loss: 0.0756, Accuracy: 98.44%
+Epoch [11/100], Step [500/782], Loss: 0.0779, Accuracy: 95.31%
+Epoch [11/100], Step [600/782], Loss: 0.1092, Accuracy: 98.44%
+Epoch [11/100], Step [700/782], Loss: 0.1302, Accuracy: 93.75%
+Test Accuracy of the model on the 10000 test images: 79.02 %
+Epoch [12/100], Step [100/782], Loss: 0.0419, Accuracy: 98.44%
+Epoch [12/100], Step [200/782], Loss: 0.1340, Accuracy: 95.31%
+Epoch [12/100], Step [300/782], Loss: 0.0371, Accuracy: 100.00%
+Epoch [12/100], Step [400/782], Loss: 0.0972, Accuracy: 95.31%
+Epoch [12/100], Step [500/782], Loss: 0.1295, Accuracy: 95.31%
+Epoch [12/100], Step [600/782], Loss: 0.0749, Accuracy: 95.31%
+Epoch [12/100], Step [700/782], Loss: 0.1376, Accuracy: 95.31%
+Test Accuracy of the model on the 10000 test images: 79.55 %
+Epoch [13/100], Step [100/782], Loss: 0.0386, Accuracy: 98.44%
+Epoch [13/100], Step [200/782], Loss: 0.0575, Accuracy: 96.88%
+Epoch [13/100], Step [300/782], Loss: 0.0642, Accuracy: 95.31%
+Epoch [13/100], Step [400/782], Loss: 0.0434, Accuracy: 98.44%
+Epoch [13/100], Step [500/782], Loss: 0.0639, Accuracy: 95.31%
+Epoch [13/100], Step [600/782], Loss: 0.0328, Accuracy: 100.00%
+Epoch [13/100], Step [700/782], Loss: 0.0917, Accuracy: 96.88%
+Test Accuracy of the model on the 10000 test images: 79.06 %
+Epoch [14/100], Step [100/782], Loss: 0.0738, Accuracy: 95.31%
+Epoch [14/100], Step [200/782], Loss: 0.0819, Accuracy: 98.44%
+Epoch [14/100], Step [300/782], Loss: 0.0176, Accuracy: 100.00%
+Epoch [14/100], Step [400/782], Loss: 0.0629, Accuracy: 98.44%
+Epoch [14/100], Step [500/782], Loss: 0.0316, Accuracy: 100.00%
+Epoch [14/100], Step [600/782], Loss: 0.0283, Accuracy: 98.44%
+Epoch [14/100], Step [700/782], Loss: 0.0397, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.16 %
+Epoch [15/100], Step [100/782], Loss: 0.0834, Accuracy: 96.88%
+Epoch [15/100], Step [200/782], Loss: 0.0622, Accuracy: 96.88%
+Epoch [15/100], Step [300/782], Loss: 0.1232, Accuracy: 95.31%
+Epoch [15/100], Step [400/782], Loss: 0.0223, Accuracy: 98.44%
+Epoch [15/100], Step [500/782], Loss: 0.0114, Accuracy: 100.00%
+Epoch [15/100], Step [600/782], Loss: 0.0321, Accuracy: 100.00%
+Epoch [15/100], Step [700/782], Loss: 0.0403, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.78 %
+Epoch [16/100], Step [100/782], Loss: 0.0359, Accuracy: 96.88%
+Epoch [16/100], Step [200/782], Loss: 0.0480, Accuracy: 96.88%
+Epoch [16/100], Step [300/782], Loss: 0.0795, Accuracy: 96.88%
+Epoch [16/100], Step [400/782], Loss: 0.0188, Accuracy: 98.44%
+Epoch [16/100], Step [500/782], Loss: 0.0342, Accuracy: 98.44%
+Epoch [16/100], Step [600/782], Loss: 0.0173, Accuracy: 100.00%
+Epoch [16/100], Step [700/782], Loss: 0.0394, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.05 %
+Epoch [17/100], Step [100/782], Loss: 0.1065, Accuracy: 95.31%
+Epoch [17/100], Step [200/782], Loss: 0.0419, Accuracy: 98.44%
+Epoch [17/100], Step [300/782], Loss: 0.0061, Accuracy: 100.00%
+Epoch [17/100], Step [400/782], Loss: 0.1306, Accuracy: 96.88%
+Epoch [17/100], Step [500/782], Loss: 0.0657, Accuracy: 96.88%
+Epoch [17/100], Step [600/782], Loss: 0.1161, Accuracy: 93.75%
+Epoch [17/100], Step [700/782], Loss: 0.0309, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.34 %
+Epoch [18/100], Step [100/782], Loss: 0.0470, Accuracy: 98.44%
+Epoch [18/100], Step [200/782], Loss: 0.0105, Accuracy: 100.00%
+Epoch [18/100], Step [300/782], Loss: 0.0410, Accuracy: 98.44%
+Epoch [18/100], Step [400/782], Loss: 0.0127, Accuracy: 100.00%
+Epoch [18/100], Step [500/782], Loss: 0.0847, Accuracy: 95.31%
+Epoch [18/100], Step [600/782], Loss: 0.0419, Accuracy: 98.44%
+Epoch [18/100], Step [700/782], Loss: 0.0362, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.43 %
+Epoch [19/100], Step [100/782], Loss: 0.0416, Accuracy: 96.88%
+Epoch [19/100], Step [200/782], Loss: 0.0908, Accuracy: 96.88%
+Epoch [19/100], Step [300/782], Loss: 0.0460, Accuracy: 98.44%
+Epoch [19/100], Step [400/782], Loss: 0.1370, Accuracy: 95.31%
+Epoch [19/100], Step [500/782], Loss: 0.1185, Accuracy: 96.88%
+Epoch [19/100], Step [600/782], Loss: 0.0687, Accuracy: 95.31%
+Epoch [19/100], Step [700/782], Loss: 0.0330, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.66 %
+Epoch [20/100], Step [100/782], Loss: 0.0998, Accuracy: 96.88%
+Epoch [20/100], Step [200/782], Loss: 0.0643, Accuracy: 98.44%
+Epoch [20/100], Step [300/782], Loss: 0.0507, Accuracy: 98.44%
+Epoch [20/100], Step [400/782], Loss: 0.0204, Accuracy: 98.44%
+Epoch [20/100], Step [500/782], Loss: 0.0296, Accuracy: 98.44%
+Epoch [20/100], Step [600/782], Loss: 0.0846, Accuracy: 96.88%
+Epoch [20/100], Step [700/782], Loss: 0.0045, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.57 %
+Epoch [21/100], Step [100/782], Loss: 0.0779, Accuracy: 95.31%
+Epoch [21/100], Step [200/782], Loss: 0.0107, Accuracy: 100.00%
+Epoch [21/100], Step [300/782], Loss: 0.0235, Accuracy: 100.00%
+Epoch [21/100], Step [400/782], Loss: 0.0357, Accuracy: 96.88%
+Epoch [21/100], Step [500/782], Loss: 0.0039, Accuracy: 100.00%
+Epoch [21/100], Step [600/782], Loss: 0.0725, Accuracy: 98.44%
+Epoch [21/100], Step [700/782], Loss: 0.0441, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 78.96 %
+Epoch [22/100], Step [100/782], Loss: 0.0046, Accuracy: 100.00%
+Epoch [22/100], Step [200/782], Loss: 0.0072, Accuracy: 100.00%
+Epoch [22/100], Step [300/782], Loss: 0.1364, Accuracy: 95.31%
+Epoch [22/100], Step [400/782], Loss: 0.1294, Accuracy: 96.88%
+Epoch [22/100], Step [500/782], Loss: 0.0204, Accuracy: 98.44%
+Epoch [22/100], Step [600/782], Loss: 0.0032, Accuracy: 100.00%
+Epoch [22/100], Step [700/782], Loss: 0.0308, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.75 %
+Epoch [23/100], Step [100/782], Loss: 0.0030, Accuracy: 100.00%
+Epoch [23/100], Step [200/782], Loss: 0.0193, Accuracy: 100.00%
+Epoch [23/100], Step [300/782], Loss: 0.0019, Accuracy: 100.00%
+Epoch [23/100], Step [400/782], Loss: 0.0022, Accuracy: 100.00%
+Epoch [23/100], Step [500/782], Loss: 0.0111, Accuracy: 100.00%
+Epoch [23/100], Step [600/782], Loss: 0.0384, Accuracy: 96.88%
+Epoch [23/100], Step [700/782], Loss: 0.0258, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 80.11 %
+Epoch [24/100], Step [100/782], Loss: 0.0077, Accuracy: 100.00%
+Epoch [24/100], Step [200/782], Loss: 0.0124, Accuracy: 100.00%
+Epoch [24/100], Step [300/782], Loss: 0.0111, Accuracy: 100.00%
+Epoch [24/100], Step [400/782], Loss: 0.0024, Accuracy: 100.00%
+Epoch [24/100], Step [500/782], Loss: 0.0050, Accuracy: 100.00%
+Epoch [24/100], Step [600/782], Loss: 0.0132, Accuracy: 100.00%
+Epoch [24/100], Step [700/782], Loss: 0.1081, Accuracy: 96.88%
+Test Accuracy of the model on the 10000 test images: 79.44 %
+Epoch [25/100], Step [100/782], Loss: 0.0064, Accuracy: 100.00%
+Epoch [25/100], Step [200/782], Loss: 0.0425, Accuracy: 96.88%
+Epoch [25/100], Step [300/782], Loss: 0.0041, Accuracy: 100.00%
+Epoch [25/100], Step [400/782], Loss: 0.0035, Accuracy: 100.00%
+Epoch [25/100], Step [500/782], Loss: 0.0168, Accuracy: 100.00%
+Epoch [25/100], Step [600/782], Loss: 0.0101, Accuracy: 100.00%
+Epoch [25/100], Step [700/782], Loss: 0.0060, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.98 %
+Epoch [26/100], Step [100/782], Loss: 0.0123, Accuracy: 100.00%
+Epoch [26/100], Step [200/782], Loss: 0.0153, Accuracy: 100.00%
+Epoch [26/100], Step [300/782], Loss: 0.0388, Accuracy: 98.44%
+Epoch [26/100], Step [400/782], Loss: 0.0098, Accuracy: 100.00%
+Epoch [26/100], Step [500/782], Loss: 0.0104, Accuracy: 100.00%
+Epoch [26/100], Step [600/782], Loss: 0.0036, Accuracy: 100.00%
+Epoch [26/100], Step [700/782], Loss: 0.0486, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.87 %
+Epoch [27/100], Step [100/782], Loss: 0.0054, Accuracy: 100.00%
+Epoch [27/100], Step [200/782], Loss: 0.0426, Accuracy: 98.44%
+Epoch [27/100], Step [300/782], Loss: 0.0251, Accuracy: 98.44%
+Epoch [27/100], Step [400/782], Loss: 0.0745, Accuracy: 98.44%
+Epoch [27/100], Step [500/782], Loss: 0.1456, Accuracy: 96.88%
+Epoch [27/100], Step [600/782], Loss: 0.0162, Accuracy: 100.00%
+Epoch [27/100], Step [700/782], Loss: 0.0107, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.63 %
+Epoch [28/100], Step [100/782], Loss: 0.0462, Accuracy: 98.44%
+Epoch [28/100], Step [200/782], Loss: 0.0075, Accuracy: 100.00%
+Epoch [28/100], Step [300/782], Loss: 0.0237, Accuracy: 98.44%
+Epoch [28/100], Step [400/782], Loss: 0.0010, Accuracy: 100.00%
+Epoch [28/100], Step [500/782], Loss: 0.0046, Accuracy: 100.00%
+Epoch [28/100], Step [600/782], Loss: 0.0139, Accuracy: 100.00%
+Epoch [28/100], Step [700/782], Loss: 0.0070, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.75 %
+Epoch [29/100], Step [100/782], Loss: 0.0499, Accuracy: 98.44%
+Epoch [29/100], Step [200/782], Loss: 0.0030, Accuracy: 100.00%
+Epoch [29/100], Step [300/782], Loss: 0.0046, Accuracy: 100.00%
+Epoch [29/100], Step [400/782], Loss: 0.0309, Accuracy: 98.44%
+Epoch [29/100], Step [500/782], Loss: 0.0273, Accuracy: 98.44%
+Epoch [29/100], Step [600/782], Loss: 0.0066, Accuracy: 100.00%
+Epoch [29/100], Step [700/782], Loss: 0.0018, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.14 %
+Epoch [30/100], Step [100/782], Loss: 0.0905, Accuracy: 95.31%
+Epoch [30/100], Step [200/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [30/100], Step [300/782], Loss: 0.0060, Accuracy: 100.00%
+Epoch [30/100], Step [400/782], Loss: 0.0178, Accuracy: 100.00%
+Epoch [30/100], Step [500/782], Loss: 0.0044, Accuracy: 100.00%
+Epoch [30/100], Step [600/782], Loss: 0.0509, Accuracy: 98.44%
+Epoch [30/100], Step [700/782], Loss: 0.0008, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.09 %
+Epoch [31/100], Step [100/782], Loss: 0.0495, Accuracy: 98.44%
+Epoch [31/100], Step [200/782], Loss: 0.0415, Accuracy: 96.88%
+Epoch [31/100], Step [300/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [31/100], Step [400/782], Loss: 0.0018, Accuracy: 100.00%
+Epoch [31/100], Step [500/782], Loss: 0.0160, Accuracy: 100.00%
+Epoch [31/100], Step [600/782], Loss: 0.0044, Accuracy: 100.00%
+Epoch [31/100], Step [700/782], Loss: 0.0033, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.05 %
+Epoch [32/100], Step [100/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [32/100], Step [200/782], Loss: 0.0079, Accuracy: 100.00%
+Epoch [32/100], Step [300/782], Loss: 0.0015, Accuracy: 100.00%
+Epoch [32/100], Step [400/782], Loss: 0.0033, Accuracy: 100.00%
+Epoch [32/100], Step [500/782], Loss: 0.0536, Accuracy: 98.44%
+Epoch [32/100], Step [600/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [32/100], Step [700/782], Loss: 0.0161, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 80.01 %
+Epoch [33/100], Step [100/782], Loss: 0.0300, Accuracy: 98.44%
+Epoch [33/100], Step [200/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [33/100], Step [300/782], Loss: 0.0149, Accuracy: 98.44%
+Epoch [33/100], Step [400/782], Loss: 0.0258, Accuracy: 98.44%
+Epoch [33/100], Step [500/782], Loss: 0.0026, Accuracy: 100.00%
+Epoch [33/100], Step [600/782], Loss: 0.0215, Accuracy: 98.44%
+Epoch [33/100], Step [700/782], Loss: 0.1154, Accuracy: 96.88%
+Test Accuracy of the model on the 10000 test images: 80.14 %
+Epoch [34/100], Step [100/782], Loss: 0.0492, Accuracy: 98.44%
+Epoch [34/100], Step [200/782], Loss: 0.0141, Accuracy: 98.44%
+Epoch [34/100], Step [300/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [34/100], Step [400/782], Loss: 0.0085, Accuracy: 100.00%
+Epoch [34/100], Step [500/782], Loss: 0.0772, Accuracy: 96.88%
+Epoch [34/100], Step [600/782], Loss: 0.0088, Accuracy: 100.00%
+Epoch [34/100], Step [700/782], Loss: 0.0956, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.72 %
+Epoch [35/100], Step [100/782], Loss: 0.0052, Accuracy: 100.00%
+Epoch [35/100], Step [200/782], Loss: 0.0055, Accuracy: 100.00%
+Epoch [35/100], Step [300/782], Loss: 0.0119, Accuracy: 100.00%
+Epoch [35/100], Step [400/782], Loss: 0.0023, Accuracy: 100.00%
+Epoch [35/100], Step [500/782], Loss: 0.0013, Accuracy: 100.00%
+Epoch [35/100], Step [600/782], Loss: 0.0206, Accuracy: 100.00%
+Epoch [35/100], Step [700/782], Loss: 0.0015, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.35 %
+Epoch [36/100], Step [100/782], Loss: 0.0113, Accuracy: 100.00%
+Epoch [36/100], Step [200/782], Loss: 0.0133, Accuracy: 98.44%
+Epoch [36/100], Step [300/782], Loss: 0.0015, Accuracy: 100.00%
+Epoch [36/100], Step [400/782], Loss: 0.0069, Accuracy: 100.00%
+Epoch [36/100], Step [500/782], Loss: 0.0017, Accuracy: 100.00%
+Epoch [36/100], Step [600/782], Loss: 0.0085, Accuracy: 100.00%
+Epoch [36/100], Step [700/782], Loss: 0.0134, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.91 %
+Epoch [37/100], Step [100/782], Loss: 0.0081, Accuracy: 100.00%
+Epoch [37/100], Step [200/782], Loss: 0.0885, Accuracy: 98.44%
+Epoch [37/100], Step [300/782], Loss: 0.0247, Accuracy: 98.44%
+Epoch [37/100], Step [400/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [37/100], Step [500/782], Loss: 0.0314, Accuracy: 98.44%
+Epoch [37/100], Step [600/782], Loss: 0.0140, Accuracy: 98.44%
+Epoch [37/100], Step [700/782], Loss: 0.0028, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.06 %
+Epoch [38/100], Step [100/782], Loss: 0.0260, Accuracy: 98.44%
+Epoch [38/100], Step [200/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [38/100], Step [300/782], Loss: 0.0042, Accuracy: 100.00%
+Epoch [38/100], Step [400/782], Loss: 0.0286, Accuracy: 98.44%
+Epoch [38/100], Step [500/782], Loss: 0.0183, Accuracy: 98.44%
+Epoch [38/100], Step [600/782], Loss: 0.0255, Accuracy: 98.44%
+Epoch [38/100], Step [700/782], Loss: 0.0262, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.63 %
+Epoch [39/100], Step [100/782], Loss: 0.0113, Accuracy: 100.00%
+Epoch [39/100], Step [200/782], Loss: 0.0059, Accuracy: 100.00%
+Epoch [39/100], Step [300/782], Loss: 0.0071, Accuracy: 100.00%
+Epoch [39/100], Step [400/782], Loss: 0.0006, Accuracy: 100.00%
+Epoch [39/100], Step [500/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [39/100], Step [600/782], Loss: 0.0018, Accuracy: 100.00%
+Epoch [39/100], Step [700/782], Loss: 0.0139, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.06 %
+Epoch [40/100], Step [100/782], Loss: 0.0034, Accuracy: 100.00%
+Epoch [40/100], Step [200/782], Loss: 0.0049, Accuracy: 100.00%
+Epoch [40/100], Step [300/782], Loss: 0.0031, Accuracy: 100.00%
+Epoch [40/100], Step [400/782], Loss: 0.0016, Accuracy: 100.00%
+Epoch [40/100], Step [500/782], Loss: 0.0008, Accuracy: 100.00%
+Epoch [40/100], Step [600/782], Loss: 0.0125, Accuracy: 100.00%
+Epoch [40/100], Step [700/782], Loss: 0.0021, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.78 %
+Epoch [41/100], Step [100/782], Loss: 0.0011, Accuracy: 100.00%
+Epoch [41/100], Step [200/782], Loss: 0.0101, Accuracy: 100.00%
+Epoch [41/100], Step [300/782], Loss: 0.0058, Accuracy: 100.00%
+Epoch [41/100], Step [400/782], Loss: 0.0368, Accuracy: 98.44%
+Epoch [41/100], Step [500/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [41/100], Step [600/782], Loss: 0.0145, Accuracy: 100.00%
+Epoch [41/100], Step [700/782], Loss: 0.0316, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 80.32 %
+Epoch [42/100], Step [100/782], Loss: 0.0027, Accuracy: 100.00%
+Epoch [42/100], Step [200/782], Loss: 0.0006, Accuracy: 100.00%
+Epoch [42/100], Step [300/782], Loss: 0.0063, Accuracy: 100.00%
+Epoch [42/100], Step [400/782], Loss: 0.0144, Accuracy: 98.44%
+Epoch [42/100], Step [500/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [42/100], Step [600/782], Loss: 0.0346, Accuracy: 98.44%
+Epoch [42/100], Step [700/782], Loss: 0.1054, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 80.03 %
+Epoch [43/100], Step [100/782], Loss: 0.0066, Accuracy: 100.00%
+Epoch [43/100], Step [200/782], Loss: 0.0012, Accuracy: 100.00%
+Epoch [43/100], Step [300/782], Loss: 0.0011, Accuracy: 100.00%
+Epoch [43/100], Step [400/782], Loss: 0.0014, Accuracy: 100.00%
+Epoch [43/100], Step [500/782], Loss: 0.0033, Accuracy: 100.00%
+Epoch [43/100], Step [600/782], Loss: 0.0266, Accuracy: 98.44%
+Epoch [43/100], Step [700/782], Loss: 0.0491, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.31 %
+Epoch [44/100], Step [100/782], Loss: 0.0196, Accuracy: 98.44%
+Epoch [44/100], Step [200/782], Loss: 0.0013, Accuracy: 100.00%
+Epoch [44/100], Step [300/782], Loss: 0.0107, Accuracy: 100.00%
+Epoch [44/100], Step [400/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [44/100], Step [500/782], Loss: 0.0007, Accuracy: 100.00%
+Epoch [44/100], Step [600/782], Loss: 0.0182, Accuracy: 100.00%
+Epoch [44/100], Step [700/782], Loss: 0.0258, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.95 %
+Epoch [45/100], Step [100/782], Loss: 0.0037, Accuracy: 100.00%
+Epoch [45/100], Step [200/782], Loss: 0.0051, Accuracy: 100.00%
+Epoch [45/100], Step [300/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [45/100], Step [400/782], Loss: 0.0038, Accuracy: 100.00%
+Epoch [45/100], Step [500/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [45/100], Step [600/782], Loss: 0.0065, Accuracy: 100.00%
+Epoch [45/100], Step [700/782], Loss: 0.0030, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.06 %
+Epoch [46/100], Step [100/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [46/100], Step [200/782], Loss: 0.0436, Accuracy: 98.44%
+Epoch [46/100], Step [300/782], Loss: 0.0056, Accuracy: 100.00%
+Epoch [46/100], Step [400/782], Loss: 0.0343, Accuracy: 98.44%
+Epoch [46/100], Step [500/782], Loss: 0.0014, Accuracy: 100.00%
+Epoch [46/100], Step [600/782], Loss: 0.0047, Accuracy: 100.00%
+Epoch [46/100], Step [700/782], Loss: 0.0120, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.84 %
+Epoch [47/100], Step [100/782], Loss: 0.0082, Accuracy: 100.00%
+Epoch [47/100], Step [200/782], Loss: 0.0067, Accuracy: 100.00%
+Epoch [47/100], Step [300/782], Loss: 0.0077, Accuracy: 100.00%
+Epoch [47/100], Step [400/782], Loss: 0.0165, Accuracy: 100.00%
+Epoch [47/100], Step [500/782], Loss: 0.0016, Accuracy: 100.00%
+Epoch [47/100], Step [600/782], Loss: 0.0033, Accuracy: 100.00%
+Epoch [47/100], Step [700/782], Loss: 0.0004, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.99 %
+Epoch [48/100], Step [100/782], Loss: 0.0010, Accuracy: 100.00%
+Epoch [48/100], Step [200/782], Loss: 0.0043, Accuracy: 100.00%
+Epoch [48/100], Step [300/782], Loss: 0.0027, Accuracy: 100.00%
+Epoch [48/100], Step [400/782], Loss: 0.0008, Accuracy: 100.00%
+Epoch [48/100], Step [500/782], Loss: 0.1376, Accuracy: 98.44%
+Epoch [48/100], Step [600/782], Loss: 0.0024, Accuracy: 100.00%
+Epoch [48/100], Step [700/782], Loss: 0.0081, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.22 %
+Epoch [49/100], Step [100/782], Loss: 0.0039, Accuracy: 100.00%
+Epoch [49/100], Step [200/782], Loss: 0.0744, Accuracy: 98.44%
+Epoch [49/100], Step [300/782], Loss: 0.0068, Accuracy: 100.00%
+Epoch [49/100], Step [400/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [49/100], Step [500/782], Loss: 0.0019, Accuracy: 100.00%
+Epoch [49/100], Step [600/782], Loss: 0.0018, Accuracy: 100.00%
+Epoch [49/100], Step [700/782], Loss: 0.0385, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.74 %
+Epoch [50/100], Step [100/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [50/100], Step [200/782], Loss: 0.0088, Accuracy: 100.00%
+Epoch [50/100], Step [300/782], Loss: 0.0225, Accuracy: 98.44%
+Epoch [50/100], Step [400/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [50/100], Step [500/782], Loss: 0.0010, Accuracy: 100.00%
+Epoch [50/100], Step [600/782], Loss: 0.0471, Accuracy: 98.44%
+Epoch [50/100], Step [700/782], Loss: 0.0509, Accuracy: 96.88%
+Test Accuracy of the model on the 10000 test images: 80.02 %
+Epoch [51/100], Step [100/782], Loss: 0.0235, Accuracy: 98.44%
+Epoch [51/100], Step [200/782], Loss: 0.0679, Accuracy: 98.44%
+Epoch [51/100], Step [300/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [51/100], Step [400/782], Loss: 0.0617, Accuracy: 98.44%
+Epoch [51/100], Step [500/782], Loss: 0.0011, Accuracy: 100.00%
+Epoch [51/100], Step [600/782], Loss: 0.0046, Accuracy: 100.00%
+Epoch [51/100], Step [700/782], Loss: 0.0004, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.07 %
+Epoch [52/100], Step [100/782], Loss: 0.0020, Accuracy: 100.00%
+Epoch [52/100], Step [200/782], Loss: 0.0097, Accuracy: 100.00%
+Epoch [52/100], Step [300/782], Loss: 0.0087, Accuracy: 100.00%
+Epoch [52/100], Step [400/782], Loss: 0.0043, Accuracy: 100.00%
+Epoch [52/100], Step [500/782], Loss: 0.0017, Accuracy: 100.00%
+Epoch [52/100], Step [600/782], Loss: 0.0016, Accuracy: 100.00%
+Epoch [52/100], Step [700/782], Loss: 0.0886, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.56 %
+Epoch [53/100], Step [100/782], Loss: 0.0425, Accuracy: 98.44%
+Epoch [53/100], Step [200/782], Loss: 0.0044, Accuracy: 100.00%
+Epoch [53/100], Step [300/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [53/100], Step [400/782], Loss: 0.0596, Accuracy: 98.44%
+Epoch [53/100], Step [500/782], Loss: 0.0076, Accuracy: 100.00%
+Epoch [53/100], Step [600/782], Loss: 0.0026, Accuracy: 100.00%
+Epoch [53/100], Step [700/782], Loss: 0.0005, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.65 %
+Epoch [54/100], Step [100/782], Loss: 0.0033, Accuracy: 100.00%
+Epoch [54/100], Step [200/782], Loss: 0.0046, Accuracy: 100.00%
+Epoch [54/100], Step [300/782], Loss: 0.0024, Accuracy: 100.00%
+Epoch [54/100], Step [400/782], Loss: 0.0133, Accuracy: 100.00%
+Epoch [54/100], Step [500/782], Loss: 0.0027, Accuracy: 100.00%
+Epoch [54/100], Step [600/782], Loss: 0.0153, Accuracy: 98.44%
+Epoch [54/100], Step [700/782], Loss: 0.0001, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.63 %
+Epoch [55/100], Step [100/782], Loss: 0.0047, Accuracy: 100.00%
+Epoch [55/100], Step [200/782], Loss: 0.0603, Accuracy: 96.88%
+Epoch [55/100], Step [300/782], Loss: 0.0012, Accuracy: 100.00%
+Epoch [55/100], Step [400/782], Loss: 0.0015, Accuracy: 100.00%
+Epoch [55/100], Step [500/782], Loss: 0.0414, Accuracy: 98.44%
+Epoch [55/100], Step [600/782], Loss: 0.0106, Accuracy: 100.00%
+Epoch [55/100], Step [700/782], Loss: 0.0009, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.78 %
+Epoch [56/100], Step [100/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [56/100], Step [200/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [56/100], Step [300/782], Loss: 0.0458, Accuracy: 95.31%
+Epoch [56/100], Step [400/782], Loss: 0.0008, Accuracy: 100.00%
+Epoch [56/100], Step [500/782], Loss: 0.0048, Accuracy: 100.00%
+Epoch [56/100], Step [600/782], Loss: 0.0011, Accuracy: 100.00%
+Epoch [56/100], Step [700/782], Loss: 0.0012, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.74 %
+Epoch [57/100], Step [100/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [57/100], Step [200/782], Loss: 0.0095, Accuracy: 100.00%
+Epoch [57/100], Step [300/782], Loss: 0.0006, Accuracy: 100.00%
+Epoch [57/100], Step [400/782], Loss: 0.0074, Accuracy: 100.00%
+Epoch [57/100], Step [500/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [57/100], Step [600/782], Loss: 0.0006, Accuracy: 100.00%
+Epoch [57/100], Step [700/782], Loss: 0.0010, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.64 %
+Epoch [58/100], Step [100/782], Loss: 0.0518, Accuracy: 98.44%
+Epoch [58/100], Step [200/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [58/100], Step [300/782], Loss: 0.0054, Accuracy: 100.00%
+Epoch [58/100], Step [400/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [58/100], Step [500/782], Loss: 0.0023, Accuracy: 100.00%
+Epoch [58/100], Step [600/782], Loss: 0.0020, Accuracy: 100.00%
+Epoch [58/100], Step [700/782], Loss: 0.0126, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 80.51 %
+Epoch [59/100], Step [100/782], Loss: 0.0016, Accuracy: 100.00%
+Epoch [59/100], Step [200/782], Loss: 0.0057, Accuracy: 100.00%
+Epoch [59/100], Step [300/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [59/100], Step [400/782], Loss: 0.0062, Accuracy: 100.00%
+Epoch [59/100], Step [500/782], Loss: 0.0014, Accuracy: 100.00%
+Epoch [59/100], Step [600/782], Loss: 0.0045, Accuracy: 100.00%
+Epoch [59/100], Step [700/782], Loss: 0.0057, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.83 %
+Epoch [60/100], Step [100/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [60/100], Step [200/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [60/100], Step [300/782], Loss: 0.0060, Accuracy: 100.00%
+Epoch [60/100], Step [400/782], Loss: 0.0026, Accuracy: 100.00%
+Epoch [60/100], Step [500/782], Loss: 0.1098, Accuracy: 98.44%
+Epoch [60/100], Step [600/782], Loss: 0.0855, Accuracy: 98.44%
+Epoch [60/100], Step [700/782], Loss: 0.0001, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.25 %
+Epoch [61/100], Step [100/782], Loss: 0.0037, Accuracy: 100.00%
+Epoch [61/100], Step [200/782], Loss: 0.0034, Accuracy: 100.00%
+Epoch [61/100], Step [300/782], Loss: 0.0131, Accuracy: 98.44%
+Epoch [61/100], Step [400/782], Loss: 0.0029, Accuracy: 100.00%
+Epoch [61/100], Step [500/782], Loss: 0.0276, Accuracy: 98.44%
+Epoch [61/100], Step [600/782], Loss: 0.0146, Accuracy: 100.00%
+Epoch [61/100], Step [700/782], Loss: 0.0027, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.93 %
+Epoch [62/100], Step [100/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [62/100], Step [200/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [62/100], Step [300/782], Loss: 0.0015, Accuracy: 100.00%
+Epoch [62/100], Step [400/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [62/100], Step [500/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [62/100], Step [600/782], Loss: 0.0024, Accuracy: 100.00%
+Epoch [62/100], Step [700/782], Loss: 0.0006, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.03 %
+Epoch [63/100], Step [100/782], Loss: 0.0015, Accuracy: 100.00%
+Epoch [63/100], Step [200/782], Loss: 0.0007, Accuracy: 100.00%
+Epoch [63/100], Step [300/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [63/100], Step [400/782], Loss: 0.0026, Accuracy: 100.00%
+Epoch [63/100], Step [500/782], Loss: 0.0011, Accuracy: 100.00%
+Epoch [63/100], Step [600/782], Loss: 0.0057, Accuracy: 100.00%
+Epoch [63/100], Step [700/782], Loss: 0.0002, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.43 %
+Epoch [64/100], Step [100/782], Loss: 0.0323, Accuracy: 98.44%
+Epoch [64/100], Step [200/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [64/100], Step [300/782], Loss: 0.0011, Accuracy: 100.00%
+Epoch [64/100], Step [400/782], Loss: 0.0018, Accuracy: 100.00%
+Epoch [64/100], Step [500/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [64/100], Step [600/782], Loss: 0.0151, Accuracy: 98.44%
+Epoch [64/100], Step [700/782], Loss: 0.0276, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 80.83 %
+Epoch [65/100], Step [100/782], Loss: 0.0011, Accuracy: 100.00%
+Epoch [65/100], Step [200/782], Loss: 0.0101, Accuracy: 100.00%
+Epoch [65/100], Step [300/782], Loss: 0.0117, Accuracy: 100.00%
+Epoch [65/100], Step [400/782], Loss: 0.0010, Accuracy: 100.00%
+Epoch [65/100], Step [500/782], Loss: 0.0008, Accuracy: 100.00%
+Epoch [65/100], Step [600/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [65/100], Step [700/782], Loss: 0.0003, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.6 %
+Epoch [66/100], Step [100/782], Loss: 0.0474, Accuracy: 98.44%
+Epoch [66/100], Step [200/782], Loss: 0.0034, Accuracy: 100.00%
+Epoch [66/100], Step [300/782], Loss: 0.0021, Accuracy: 100.00%
+Epoch [66/100], Step [400/782], Loss: 0.0012, Accuracy: 100.00%
+Epoch [66/100], Step [500/782], Loss: 0.0145, Accuracy: 98.44%
+Epoch [66/100], Step [600/782], Loss: 0.0107, Accuracy: 100.00%
+Epoch [66/100], Step [700/782], Loss: 0.0008, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.66 %
+Epoch [67/100], Step [100/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [67/100], Step [200/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [67/100], Step [300/782], Loss: 0.0024, Accuracy: 100.00%
+Epoch [67/100], Step [400/782], Loss: 0.0006, Accuracy: 100.00%
+Epoch [67/100], Step [500/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [67/100], Step [600/782], Loss: 0.0642, Accuracy: 96.88%
+Epoch [67/100], Step [700/782], Loss: 0.0001, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.09 %
+Epoch [68/100], Step [100/782], Loss: 0.0156, Accuracy: 98.44%
+Epoch [68/100], Step [200/782], Loss: 0.0447, Accuracy: 98.44%
+Epoch [68/100], Step [300/782], Loss: 0.0022, Accuracy: 100.00%
+Epoch [68/100], Step [400/782], Loss: 0.0030, Accuracy: 100.00%
+Epoch [68/100], Step [500/782], Loss: 0.0880, Accuracy: 98.44%
+Epoch [68/100], Step [600/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [68/100], Step [700/782], Loss: 0.0041, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.03 %
+Epoch [69/100], Step [100/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [69/100], Step [200/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [69/100], Step [300/782], Loss: 0.0196, Accuracy: 98.44%
+Epoch [69/100], Step [400/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [69/100], Step [500/782], Loss: 0.0516, Accuracy: 98.44%
+Epoch [69/100], Step [600/782], Loss: 0.0260, Accuracy: 98.44%
+Epoch [69/100], Step [700/782], Loss: 0.0004, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.09 %
+Epoch [70/100], Step [100/782], Loss: 0.0007, Accuracy: 100.00%
+Epoch [70/100], Step [200/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [70/100], Step [300/782], Loss: 0.0033, Accuracy: 100.00%
+Epoch [70/100], Step [400/782], Loss: 0.0022, Accuracy: 100.00%
+Epoch [70/100], Step [500/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [70/100], Step [600/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [70/100], Step [700/782], Loss: 0.0018, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.82 %
+Epoch [71/100], Step [100/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [71/100], Step [200/782], Loss: 0.0096, Accuracy: 100.00%
+Epoch [71/100], Step [300/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [71/100], Step [400/782], Loss: 0.0007, Accuracy: 100.00%
+Epoch [71/100], Step [500/782], Loss: 0.0039, Accuracy: 100.00%
+Epoch [71/100], Step [600/782], Loss: 0.0189, Accuracy: 98.44%
+Epoch [71/100], Step [700/782], Loss: 0.0191, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 80.22 %
+Epoch [72/100], Step [100/782], Loss: 0.0196, Accuracy: 98.44%
+Epoch [72/100], Step [200/782], Loss: 0.0069, Accuracy: 100.00%
+Epoch [72/100], Step [300/782], Loss: 0.0021, Accuracy: 100.00%
+Epoch [72/100], Step [400/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [72/100], Step [500/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [72/100], Step [600/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [72/100], Step [700/782], Loss: 0.0033, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.97 %
+Epoch [73/100], Step [100/782], Loss: 0.0022, Accuracy: 100.00%
+Epoch [73/100], Step [200/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [73/100], Step [300/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [73/100], Step [400/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [73/100], Step [500/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [73/100], Step [600/782], Loss: 0.0041, Accuracy: 100.00%
+Epoch [73/100], Step [700/782], Loss: 0.0008, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.31 %
+Epoch [74/100], Step [100/782], Loss: 0.0048, Accuracy: 100.00%
+Epoch [74/100], Step [200/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [74/100], Step [300/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [74/100], Step [400/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [74/100], Step [500/782], Loss: 0.0068, Accuracy: 100.00%
+Epoch [74/100], Step [600/782], Loss: 0.0015, Accuracy: 100.00%
+Epoch [74/100], Step [700/782], Loss: 0.0030, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.73 %
+Epoch [75/100], Step [100/782], Loss: 0.0852, Accuracy: 98.44%
+Epoch [75/100], Step [200/782], Loss: 0.0006, Accuracy: 100.00%
+Epoch [75/100], Step [300/782], Loss: 0.0297, Accuracy: 98.44%
+Epoch [75/100], Step [400/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [75/100], Step [500/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [75/100], Step [600/782], Loss: 0.0020, Accuracy: 100.00%
+Epoch [75/100], Step [700/782], Loss: 0.0076, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.98 %
+Epoch [76/100], Step [100/782], Loss: 0.0117, Accuracy: 98.44%
+Epoch [76/100], Step [200/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [76/100], Step [300/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [76/100], Step [400/782], Loss: 0.0027, Accuracy: 100.00%
+Epoch [76/100], Step [500/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [76/100], Step [600/782], Loss: 0.0008, Accuracy: 100.00%
+Epoch [76/100], Step [700/782], Loss: 0.0124, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.74 %
+Epoch [77/100], Step [100/782], Loss: 0.0008, Accuracy: 100.00%
+Epoch [77/100], Step [200/782], Loss: 0.0681, Accuracy: 98.44%
+Epoch [77/100], Step [300/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [77/100], Step [400/782], Loss: 0.0063, Accuracy: 100.00%
+Epoch [77/100], Step [500/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [77/100], Step [600/782], Loss: 0.0016, Accuracy: 100.00%
+Epoch [77/100], Step [700/782], Loss: 0.0004, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.09 %
+Epoch [78/100], Step [100/782], Loss: 0.0018, Accuracy: 100.00%
+Epoch [78/100], Step [200/782], Loss: 0.0173, Accuracy: 100.00%
+Epoch [78/100], Step [300/782], Loss: 0.0029, Accuracy: 100.00%
+Epoch [78/100], Step [400/782], Loss: 0.0019, Accuracy: 100.00%
+Epoch [78/100], Step [500/782], Loss: 0.0391, Accuracy: 98.44%
+Epoch [78/100], Step [600/782], Loss: 0.0452, Accuracy: 98.44%
+Epoch [78/100], Step [700/782], Loss: 0.0004, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.65 %
+Epoch [79/100], Step [100/782], Loss: 0.0030, Accuracy: 100.00%
+Epoch [79/100], Step [200/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [79/100], Step [300/782], Loss: 0.0520, Accuracy: 98.44%
+Epoch [79/100], Step [400/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [79/100], Step [500/782], Loss: 0.0015, Accuracy: 100.00%
+Epoch [79/100], Step [600/782], Loss: 0.0257, Accuracy: 98.44%
+Epoch [79/100], Step [700/782], Loss: 0.0103, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.58 %
+Epoch [80/100], Step [100/782], Loss: 0.0031, Accuracy: 100.00%
+Epoch [80/100], Step [200/782], Loss: 0.0379, Accuracy: 98.44%
+Epoch [80/100], Step [300/782], Loss: 0.0492, Accuracy: 96.88%
+Epoch [80/100], Step [400/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [80/100], Step [500/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [80/100], Step [600/782], Loss: 0.0030, Accuracy: 100.00%
+Epoch [80/100], Step [700/782], Loss: 0.0118, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.65 %
+Epoch [81/100], Step [100/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [81/100], Step [200/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [81/100], Step [300/782], Loss: 0.0023, Accuracy: 100.00%
+Epoch [81/100], Step [400/782], Loss: 0.0114, Accuracy: 100.00%
+Epoch [81/100], Step [500/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [81/100], Step [600/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [81/100], Step [700/782], Loss: 0.0195, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.94 %
+Epoch [82/100], Step [100/782], Loss: 0.0312, Accuracy: 98.44%
+Epoch [82/100], Step [200/782], Loss: 0.0031, Accuracy: 100.00%
+Epoch [82/100], Step [300/782], Loss: 0.0353, Accuracy: 98.44%
+Epoch [82/100], Step [400/782], Loss: 0.0256, Accuracy: 98.44%
+Epoch [82/100], Step [500/782], Loss: 0.0072, Accuracy: 100.00%
+Epoch [82/100], Step [600/782], Loss: 0.0147, Accuracy: 98.44%
+Epoch [82/100], Step [700/782], Loss: 0.0001, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.98 %
+Epoch [83/100], Step [100/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [83/100], Step [200/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [83/100], Step [300/782], Loss: 0.0082, Accuracy: 100.00%
+Epoch [83/100], Step [400/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [83/100], Step [500/782], Loss: 0.0055, Accuracy: 100.00%
+Epoch [83/100], Step [600/782], Loss: 0.0098, Accuracy: 100.00%
+Epoch [83/100], Step [700/782], Loss: 0.0001, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.44 %
+Epoch [84/100], Step [100/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [84/100], Step [200/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [84/100], Step [300/782], Loss: 0.0051, Accuracy: 100.00%
+Epoch [84/100], Step [400/782], Loss: 0.0021, Accuracy: 100.00%
+Epoch [84/100], Step [500/782], Loss: 0.0034, Accuracy: 100.00%
+Epoch [84/100], Step [600/782], Loss: 0.0062, Accuracy: 100.00%
+Epoch [84/100], Step [700/782], Loss: 0.0011, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.31 %
+Epoch [85/100], Step [100/782], Loss: 0.0008, Accuracy: 100.00%
+Epoch [85/100], Step [200/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [85/100], Step [300/782], Loss: 0.0007, Accuracy: 100.00%
+Epoch [85/100], Step [400/782], Loss: 0.0072, Accuracy: 100.00%
+Epoch [85/100], Step [500/782], Loss: 0.0067, Accuracy: 100.00%
+Epoch [85/100], Step [600/782], Loss: 0.0156, Accuracy: 98.44%
+Epoch [85/100], Step [700/782], Loss: 0.0035, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.05 %
+Epoch [86/100], Step [100/782], Loss: 0.0067, Accuracy: 100.00%
+Epoch [86/100], Step [200/782], Loss: 0.0061, Accuracy: 100.00%
+Epoch [86/100], Step [300/782], Loss: 0.0011, Accuracy: 100.00%
+Epoch [86/100], Step [400/782], Loss: 0.1038, Accuracy: 98.44%
+Epoch [86/100], Step [500/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [86/100], Step [600/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [86/100], Step [700/782], Loss: 0.0003, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.88 %
+Epoch [87/100], Step [100/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [87/100], Step [200/782], Loss: 0.0030, Accuracy: 100.00%
+Epoch [87/100], Step [300/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [87/100], Step [400/782], Loss: 0.0010, Accuracy: 100.00%
+Epoch [87/100], Step [500/782], Loss: 0.0081, Accuracy: 100.00%
+Epoch [87/100], Step [600/782], Loss: 0.0039, Accuracy: 100.00%
+Epoch [87/100], Step [700/782], Loss: 0.0000, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.44 %
+Epoch [88/100], Step [100/782], Loss: 0.0028, Accuracy: 100.00%
+Epoch [88/100], Step [200/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [88/100], Step [300/782], Loss: 0.0115, Accuracy: 100.00%
+Epoch [88/100], Step [400/782], Loss: 0.0445, Accuracy: 98.44%
+Epoch [88/100], Step [500/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [88/100], Step [600/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [88/100], Step [700/782], Loss: 0.0000, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.05 %
+Epoch [89/100], Step [100/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [89/100], Step [200/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [89/100], Step [300/782], Loss: 0.0050, Accuracy: 100.00%
+Epoch [89/100], Step [400/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [89/100], Step [500/782], Loss: 0.0129, Accuracy: 98.44%
+Epoch [89/100], Step [600/782], Loss: 0.0006, Accuracy: 100.00%
+Epoch [89/100], Step [700/782], Loss: 0.0077, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.04 %
+Epoch [90/100], Step [100/782], Loss: 0.0242, Accuracy: 98.44%
+Epoch [90/100], Step [200/782], Loss: 0.0010, Accuracy: 100.00%
+Epoch [90/100], Step [300/782], Loss: 0.0013, Accuracy: 100.00%
+Epoch [90/100], Step [400/782], Loss: 0.0021, Accuracy: 100.00%
+Epoch [90/100], Step [500/782], Loss: 0.0018, Accuracy: 100.00%
+Epoch [90/100], Step [600/782], Loss: 0.0015, Accuracy: 100.00%
+Epoch [90/100], Step [700/782], Loss: 0.0009, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.21 %
+Epoch [91/100], Step [100/782], Loss: 0.0080, Accuracy: 100.00%
+Epoch [91/100], Step [200/782], Loss: 0.0017, Accuracy: 100.00%
+Epoch [91/100], Step [300/782], Loss: 0.0084, Accuracy: 100.00%
+Epoch [91/100], Step [400/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [91/100], Step [500/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [91/100], Step [600/782], Loss: 0.0016, Accuracy: 100.00%
+Epoch [91/100], Step [700/782], Loss: 0.0027, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.22 %
+Epoch [92/100], Step [100/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [92/100], Step [200/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [92/100], Step [300/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [92/100], Step [400/782], Loss: 0.0213, Accuracy: 98.44%
+Epoch [92/100], Step [500/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [92/100], Step [600/782], Loss: 0.0013, Accuracy: 100.00%
+Epoch [92/100], Step [700/782], Loss: 0.0022, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.68 %
+Epoch [93/100], Step [100/782], Loss: 0.0007, Accuracy: 100.00%
+Epoch [93/100], Step [200/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [93/100], Step [300/782], Loss: 0.0746, Accuracy: 98.44%
+Epoch [93/100], Step [400/782], Loss: 0.0071, Accuracy: 100.00%
+Epoch [93/100], Step [500/782], Loss: 0.0009, Accuracy: 100.00%
+Epoch [93/100], Step [600/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [93/100], Step [700/782], Loss: 0.0013, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.45 %
+Epoch [94/100], Step [100/782], Loss: 0.0122, Accuracy: 100.00%
+Epoch [94/100], Step [200/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [94/100], Step [300/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [94/100], Step [400/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [94/100], Step [500/782], Loss: 0.0193, Accuracy: 98.44%
+Epoch [94/100], Step [600/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [94/100], Step [700/782], Loss: 0.0252, Accuracy: 98.44%
+Test Accuracy of the model on the 10000 test images: 79.77 %
+Epoch [95/100], Step [100/782], Loss: 0.0069, Accuracy: 100.00%
+Epoch [95/100], Step [200/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [95/100], Step [300/782], Loss: 0.0215, Accuracy: 98.44%
+Epoch [95/100], Step [400/782], Loss: 0.0692, Accuracy: 98.44%
+Epoch [95/100], Step [500/782], Loss: 0.0026, Accuracy: 100.00%
+Epoch [95/100], Step [600/782], Loss: 0.0112, Accuracy: 100.00%
+Epoch [95/100], Step [700/782], Loss: 0.0002, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.13 %
+Epoch [96/100], Step [100/782], Loss: 0.0040, Accuracy: 100.00%
+Epoch [96/100], Step [200/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [96/100], Step [300/782], Loss: 0.0007, Accuracy: 100.00%
+Epoch [96/100], Step [400/782], Loss: 0.0004, Accuracy: 100.00%
+Epoch [96/100], Step [500/782], Loss: 0.0077, Accuracy: 100.00%
+Epoch [96/100], Step [600/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [96/100], Step [700/782], Loss: 0.0000, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 79.91 %
+Epoch [97/100], Step [100/782], Loss: 0.0000, Accuracy: 100.00%
+Epoch [97/100], Step [200/782], Loss: 0.0011, Accuracy: 100.00%
+Epoch [97/100], Step [300/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [97/100], Step [400/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [97/100], Step [500/782], Loss: 0.0031, Accuracy: 100.00%
+Epoch [97/100], Step [600/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [97/100], Step [700/782], Loss: 0.0000, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.03 %
+Epoch [98/100], Step [100/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [98/100], Step [200/782], Loss: 0.0017, Accuracy: 100.00%
+Epoch [98/100], Step [300/782], Loss: 0.0021, Accuracy: 100.00%
+Epoch [98/100], Step [400/782], Loss: 0.0435, Accuracy: 98.44%
+Epoch [98/100], Step [500/782], Loss: 0.0015, Accuracy: 100.00%
+Epoch [98/100], Step [600/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [98/100], Step [700/782], Loss: 0.0001, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.23 %
+Epoch [99/100], Step [100/782], Loss: 0.0014, Accuracy: 100.00%
+Epoch [99/100], Step [200/782], Loss: 0.0003, Accuracy: 100.00%
+Epoch [99/100], Step [300/782], Loss: 0.0049, Accuracy: 100.00%
+Epoch [99/100], Step [400/782], Loss: 0.0005, Accuracy: 100.00%
+Epoch [99/100], Step [500/782], Loss: 0.0168, Accuracy: 98.44%
+Epoch [99/100], Step [600/782], Loss: 0.0013, Accuracy: 100.00%
+Epoch [99/100], Step [700/782], Loss: 0.0009, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.42 %
+Epoch [100/100], Step [100/782], Loss: 0.0002, Accuracy: 100.00%
+Epoch [100/100], Step [200/782], Loss: 0.0043, Accuracy: 100.00%
+Epoch [100/100], Step [300/782], Loss: 0.0001, Accuracy: 100.00%
+Epoch [100/100], Step [400/782], Loss: 0.0499, Accuracy: 96.88%
+Epoch [100/100], Step [500/782], Loss: 0.0042, Accuracy: 100.00%
+Epoch [100/100], Step [600/782], Loss: 0.0132, Accuracy: 98.44%
+Epoch [100/100], Step [700/782], Loss: 0.0005, Accuracy: 100.00%
+Test Accuracy of the model on the 10000 test images: 80.26 %

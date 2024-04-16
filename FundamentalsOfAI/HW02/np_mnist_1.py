@@ -145,7 +145,7 @@ class Network(object):
 
 if __name__ == '__main__':
     # 训练网络
-    net = Network(input_size=784, hidden_size=256, output_size=10, lr=0.01)
+    net = Network(input_size=784, hidden_size=256, output_size=10, lr=0.05)
     loss_in_val = []
     acc_in_val = []
     for epoch in range(10):
@@ -179,4 +179,4 @@ if __name__ == '__main__':
     plt.xlabel("epoch")
     plt.ylabel("acc %")
     plt.title("numpy implement mnist")
-    plt.savefig("./numpy_acc.jpg")
+    plt.savefig("./numpy_acc_2.jpg")
