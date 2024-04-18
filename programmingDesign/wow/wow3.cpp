@@ -6,6 +6,8 @@
  * Run for our better future!
  */
 
+#include <algorithm>
+#include <cstdio>
 #include <cstring>
 #include <iomanip>
 #include <iostream>
@@ -39,12 +41,16 @@ public:
         this_time_warrior[ 0 ] = this_time_warrior[ 1 ] = nullptr;
     }
     virtual void walk();
-    void         update();
-    void         fight();
-    void         runaway();
-    void         rub();
-    void         report();
+
+    void update();
+    void fight();
+    void runaway();
+    void rub();
+    void report() const;
     virtual ~City();
+
+protected:
+    void reportDied( int cnt );
 };
 std::shared_ptr< City > Citys[ 1000 ];
 class Headquarter : public City {
@@ -158,21 +164,26 @@ public:
         this->health -= x;
     }
     virtual void walk();
-    virtual void update() = 0;
-    virtual int  attack() = 0;
-    virtual void report() = 0;
+    virtual void update()      = 0;
+    virtual void totalUpdate() = 0;
+    virtual int  attack()      = 0;
+    virtual void report()      = 0;
     virtual bool runaway() {
         return 0;
     }
+    virtual void yell( City* c ) {};
 };
 
 class WarriorWithWeapon : public Warrior {
 public:
     std::vector< std::shared_ptr< Weapon > > Weapons[ 3 ];
-    int                                      weaponCount;
+    std::vector< std::shared_ptr< Weapon > > CurrentWeapons;
+
+    int weaponCount;
+    int current_weapon;
 
 protected:
-    WarriorWithWeapon( int health_, ColorType color_, int type = 1 ) : Warrior( health_, color_ ) {
+    WarriorWithWeapon( const int health_, ColorType color_, int type = 1 ) : Warrior( health_, color_ ) {
         newWeapon( Weapons, type );
         weaponCount = type;
     }
@@ -180,7 +191,7 @@ protected:
 public:
     void SummonPrint( const Headquarter* H );
 
-    void newWeapon( std::vector< std::shared_ptr< Weapon > > weapons[], int n );
+    void newWeapon( std::vector< std::shared_ptr< Weapon > > weapons[], const int n );
     ~WarriorWithWeapon() {
         for ( auto i : Weapons[ 0 ] )
             i.reset();
@@ -191,6 +202,7 @@ public:
     }
     int  attack();
     void update();
+    void totalUpdate();
     void report();
 
     virtual void rub( std::shared_ptr< WarriorWithWeapon > );
@@ -317,7 +329,7 @@ int Bomb::useWeapon( Warrior* warrior ) {
     return warrior->force * 4 / 10;
 }
 int Arrow::useWeapon( Warrior* warrior ) {
-    if ( !this->count )
+    if ( this->count <= 0 )
         return -1;
     this->count--;
     return warrior->force * 3 / 10;
@@ -375,40 +387,51 @@ void WarriorWithWeapon::newWeapon( std::vector< std::shared_ptr< Weapon > > weap
 }
 
 int WarriorWithWeapon::attack() {
-    if ( !this->Weapons[ sword ].empty() ) {
-        return this->Weapons[ sword ].back()->useWeapon( this );
+    int cnt = 0;
+    if ( weaponCount == 0 )
+        return -1;
+    current_weapon %= weaponCount;
+    while ( weaponCount ) {
+        if ( CurrentWeapons[ current_weapon ] != nullptr && !CurrentWeapons[ current_weapon ]->available() ) {
+            cnt++;
+            current_weapon++;
+            current_weapon %= weaponCount;
+            if ( cnt >= weaponCount )
+                return -1;
+        }
+        else if ( CurrentWeapons[ current_weapon ] != nullptr && CurrentWeapons[ current_weapon ]->available() )
+            break;
     }
-    if ( !this->Weapons[ bomb ].empty() ) {
-        int attack = Weapons[ bomb ].back()->useWeapon( this );
-        hurt( attack / 2, 1 );
-        Weapons[ bomb ].pop_back();
-        return attack;
-    }
-    if ( !this->Weapons[ arrow ].empty() ) {
-        int attack = Weapons[ arrow ].back()->useWeapon( this );
-        if ( !Weapons[ arrow ].back()->available() )
-            Weapons[ arrow ].pop_back();
-        return attack;
-    }
-    return 0;
+    if ( current_weapon >= weaponCount )
+        return -1;
+    int attack = CurrentWeapons[ current_weapon ]->useWeapon( this );
+    if ( CurrentWeapons[ current_weapon ]->getName()[ 0 ] == 'b' )
+        this->hurt( attack / 2, 1 );
+    current_weapon++;
+    return attack;
 }
 
 void WarriorWithWeapon::update() {
-    while ( !Weapons[ sword ].empty() && !Weapons[ sword ].back()->available() ) {
-        Weapons[ sword ].back().reset();
-        Weapons[ sword ].pop_back();
-        weaponCount--;
-    }
-    while ( !Weapons[ arrow ].empty() && !Weapons[ arrow ].back()->available() ) {
-        Weapons[ arrow ].back().reset();
-        Weapons[ arrow ].pop_back();
-        weaponCount--;
-    }
-    while ( !Weapons[ bomb ].empty() && !Weapons[ bomb ].back()->available() ) {
-        Weapons[ bomb ].back().reset();
-        Weapons[ bomb ].pop_back();
-        weaponCount--;
-    }
+    for ( int weapontype = 0; weapontype <= 2; weapontype++ )
+        for ( auto it = Weapons[ weapontype ].begin(); it != Weapons[ weapontype ].end(); ) {
+            if ( !( *it )->available() ) {
+                *it = nullptr;
+                it  = Weapons[ weapontype ].erase( it );
+                weaponCount--;
+            }
+            else {
+                it++;
+            }
+        }
+}
+
+void WarriorWithWeapon::totalUpdate() {
+    this->update();
+    CurrentWeapons.clear();
+    std::copy( Weapons[ 0 ].rbegin(), Weapons[ 0 ].rend(), std::back_inserter( CurrentWeapons ) );
+    std::copy( Weapons[ 1 ].rbegin(), Weapons[ 1 ].rend(), std::back_inserter( CurrentWeapons ) );
+    std::copy( Weapons[ 2 ].rbegin(), Weapons[ 2 ].rend(), std::back_inserter( CurrentWeapons ) );
+    this->current_weapon = 0;
 }
 
 void WarriorWithWeapon::report() {
@@ -416,54 +439,44 @@ void WarriorWithWeapon::report() {
         std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " " << ( color == red ? "red" : "blue" ) << " " << name << " " << number
                   << " has " << Weapons[ 0 ].size() << " sword " << Weapons[ 1 ].size() << " bomb " << Weapons[ 2 ].size() << " arrow and " << health << " elements" << std::endl;
 }
+
 int Ninja::attack() {
-    if ( !this->Weapons[ sword ].empty() ) {
-        return this->Weapons[ sword ].back()->useWeapon( this );
+    int cnt = 0;
+    if ( weaponCount == 0 )
+        return -1;
+    current_weapon %= weaponCount;
+    while ( weaponCount ) {
+        if ( CurrentWeapons[ current_weapon ] != nullptr && !CurrentWeapons[ current_weapon ]->available() ) {
+            cnt++;
+            current_weapon++;
+            current_weapon %= weaponCount;
+            if ( cnt >= weaponCount )
+                return -1;
+        }
+        else if ( CurrentWeapons[ current_weapon ] != nullptr && CurrentWeapons[ current_weapon ]->available() )
+            break;
     }
-    if ( !this->Weapons[ bomb ].empty() ) {
-        int attack = Weapons[ bomb ].back()->useWeapon( this );
-        Weapons[ bomb ].pop_back();
-        return attack;
-    }
-    if ( !this->Weapons[ arrow ].empty() ) {
-        int attack = Weapons[ arrow ].back()->useWeapon( this );
-        if ( !Weapons[ arrow ].back()->available() == 0 )
-            Weapons[ arrow ].pop_back();
-        return attack;
-    }
-    return 0;
+    if ( current_weapon >= weaponCount )
+        return -1;
+    int attack = CurrentWeapons[ current_weapon ]->useWeapon( this );
+    current_weapon++;
+    return attack;
 }
+
 void WarriorWithWeapon::rub( std::shared_ptr< WarriorWithWeapon > target )  // 有问题吗
 {
     if ( target == nullptr )
         return;
     int cnt = 0;
-    while ( !target->Weapons[ 0 ].empty() ) {
-        if ( this->weaponCount < 10 ) {
-            this->Weapons[ 0 ].push_back( target->Weapons[ 0 ][ 0 ] );
-            target->Weapons[ 0 ].erase( target->Weapons[ 0 ].begin() ), this->weaponCount++, target->weaponCount--;
+    for ( int weapontype = 0; weapontype <= 2; weapontype++ ) {
+        while ( !target->Weapons[ weapontype ].empty() ) {
+            if ( this->weaponCount < 10 )
+                this->Weapons[ weapontype ].push_back( target->Weapons[ weapontype ][ 0 ] ), target->Weapons[ weapontype ].erase( target->Weapons[ weapontype ].begin() ), this->weaponCount++,
+                    target->weaponCount--;
+            else
+                break;
+            cnt++;
         }
-        else
-            break;
-        cnt++;
-    }
-    while ( !target->Weapons[ 1 ].empty() ) {
-        if ( this->weaponCount < 10 ) {
-            this->Weapons[ 1 ].push_back( target->Weapons[ 1 ][ 0 ] );
-            target->Weapons[ 1 ].erase( target->Weapons[ 1 ].begin() ), this->weaponCount++, target->weaponCount--;
-        }
-        else
-            break;
-        cnt++;
-    }
-    while ( !target->Weapons[ 2 ].empty() ) {
-        if ( this->weaponCount < 10 ) {
-            this->Weapons[ 2 ].push_back( target->Weapons[ 2 ][ 0 ] );
-            target->Weapons[ 2 ].erase( target->Weapons[ 2 ].begin() ), this->weaponCount++, target->weaponCount--;
-        }
-        else
-            break;
-        cnt++;
     }
 }
 void Wolf::rubWeapon( std::shared_ptr< WarriorWithWeapon > target )  // 有问题吗
@@ -473,47 +486,22 @@ void Wolf::rubWeapon( std::shared_ptr< WarriorWithWeapon > target )  // 有问�
     if ( strcmp( target->name, "wolf" ) == 0 )
         return;
     int cnt = 0;
-    while ( !target->Weapons[ 0 ].empty() ) {
-        if ( this->weaponCount < 10 )
-            this->Weapons[ 0 ].push_back( target->Weapons[ 0 ][ 0 ] ), target->Weapons[ 0 ].erase( target->Weapons[ 0 ].begin() ), this->weaponCount++, target->weaponCount--;
-        else
-            break;
-        cnt++;
-    }
-    if ( cnt ) {
-        if ( !disableOutput )
-            std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " " << ( color == red ? "red" : "blue" ) << " " << name << " "
-                      << number << " took " << cnt << " sword from " << ( target->color == red ? "red" : "blue" ) << " " << target->name << " " << target->number << " in city " << this->cityPosition
-                      << std::endl;
-        return;
-    }
-
-    while ( !target->Weapons[ 1 ].empty() ) {
-        if ( this->weaponCount < 10 )
-            this->Weapons[ 1 ].push_back( target->Weapons[ 1 ][ 0 ] ), target->Weapons[ 1 ].erase( target->Weapons[ 1 ].begin() ), this->weaponCount++, target->weaponCount--;
-        else
-            break;
-        cnt++;
-    }
-    if ( cnt ) {
-        if ( !disableOutput )
-            std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " " << ( color == red ? "red" : "blue" ) << " " << name << " "
-                      << number << " took " << cnt << " bomb from " << ( target->color == red ? "red" : "blue" ) << " " << target->name << " in city " << this->cityPosition << std::endl;
-        return;
-    }
-
-    while ( !target->Weapons[ 2 ].empty() ) {
-        if ( this->weaponCount < 10 )
-            this->Weapons[ 2 ].push_back( target->Weapons[ 2 ][ 0 ] ), target->Weapons[ 2 ].erase( target->Weapons[ 2 ].begin() ), this->weaponCount++, target->weaponCount--;
-        else
-            break;
-        cnt++;
-    }
-    if ( cnt ) {
-        if ( !disableOutput )
-            std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " " << ( color == red ? "red" : "blue" ) << " " << name << " "
-                      << number << " took " << cnt << " arrow from " << ( target->color == red ? "red" : "blue" ) << " " << target->name << " in city " << this->cityPosition << std::endl;
-        return;
+    for ( int weapontype = 0; weapontype <= 2; weapontype++ ) {
+        while ( !target->Weapons[ weapontype ].empty() ) {
+            if ( this->weaponCount < 10 )
+                this->Weapons[ weapontype ].push_back( target->Weapons[ weapontype ][ 0 ] ), target->Weapons[ weapontype ].erase( target->Weapons[ weapontype ].begin() ), this->weaponCount++,
+                    target->weaponCount--;
+            else
+                break;
+            cnt++;
+        }
+        if ( cnt ) {
+            if ( !disableOutput )
+                std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " " << ( color == red ? "red" : "blue" ) << " " << name << " "
+                          << number << " took " << cnt << " " << Weapons[ weapontype ][ 0 ]->getName() << " from " << ( target->color == red ? "red" : "blue" ) << " " << target->name << " "
+                          << target->number << " in city " << this->cityPosition << std::endl;
+            return;
+        }
     }
 }
 
@@ -546,7 +534,6 @@ void Headquarter::report() {
 void Headquarter::Summon() {
     if ( !ableToSummon )
         return;
-    int  try_cnt;
     bool flag = false;
     currentPosition++;
     currentPosition %= 5;
@@ -639,35 +626,49 @@ void City::update() {
 }
 
 void City::runaway() {
-    if ( this->warrior[ 0 ]->runaway() ) {
+    if ( this->warrior[ 0 ] != nullptr && this->warrior[ 0 ]->runaway() )
         this->warrior[ 0 ] = nullptr;
-    }
-    if ( this->warrior[ 1 ]->runaway() )
+    if ( this->warrior[ 1 ] != nullptr && this->warrior[ 1 ]->runaway() )
         this->warrior[ 1 ] = nullptr;
 }
 
 void City::rub() {
-    std::static_pointer_cast< WarriorWithWeapon >( this->warrior[ 0 ] )->rubWeapon( std::static_pointer_cast< WarriorWithWeapon >( this->warrior[ 1 ] ) );
-    std::static_pointer_cast< WarriorWithWeapon >( this->warrior[ 1 ] )->rubWeapon( std::static_pointer_cast< WarriorWithWeapon >( this->warrior[ 0 ] ) );
+    if ( this->warrior[ 0 ] != nullptr )
+        std::static_pointer_cast< WarriorWithWeapon >( this->warrior[ 0 ] )->rubWeapon( std::static_pointer_cast< WarriorWithWeapon >( this->warrior[ 1 ] ) );
+    if ( this->warrior[ 1 ] != nullptr )
+        std::static_pointer_cast< WarriorWithWeapon >( this->warrior[ 1 ] )->rubWeapon( std::static_pointer_cast< WarriorWithWeapon >( this->warrior[ 0 ] ) );
 }
 
-void City::report() {
+void City::report() const {
     if ( this->warrior[ 0 ] != nullptr )
         this->warrior[ 0 ]->report();
     if ( this->warrior[ 1 ] != nullptr )
         this->warrior[ 1 ]->report();
 }
+
+void City::reportDied( int count ) {
+    if ( !disableOutput )
+        std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " " << ( warrior[ ( count + 1 ) % 2 ]->color == red ? "red" : "blue" )
+                  << " " << warrior[ ( count + 1 ) % 2 ]->name << " " << warrior[ ( count + 1 ) % 2 ]->number << " killed " << ( warrior[ count % 2 ]->color == red ? "red" : "blue" ) << " "
+                  << warrior[ count % 2 ]->name << " " << warrior[ count % 2 ]->number << " in city " << this->count << " remaining " << warrior[ ( count + 1 ) % 2 ]->health << " elements"
+                  << std::endl;
+    warrior[ count % 2 ]->update();
+    warrior[ ( count + 1 ) % 2 ]->update();
+    std::dynamic_pointer_cast< WarriorWithWeapon >( warrior[ ( count + 1 ) % 2 ] )->rub( std::dynamic_pointer_cast< WarriorWithWeapon >( warrior[ count % 2 ] ) );
+    warrior[ count % 2 ] = nullptr;
+    warrior[ ( count + 1 ) % 2 ]->yell( this );
+}
+
 void City::fight() {
     if ( this->warrior[ 0 ] == nullptr || this->warrior[ 1 ] == nullptr )
         return;
     auto died = []( std::shared_ptr< Warrior > wa ) -> bool { return wa->health <= 0; };
+    warrior[ 0 ]->totalUpdate(), warrior[ 1 ]->totalUpdate();
     while ( 1 ) {
-        warrior[ 0 ]->update(), warrior[ 1 ]->update();
         int hurt1 = warrior[ ( count + 1 ) % 2 ]->attack();
-        warrior[ this->count % 2 ]->hurt( hurt1, 0 );
-        warrior[ 0 ]->update(), warrior[ 1 ]->update();
-        if ( died( warrior[ ( count + 1 ) % 2 ] ) ) {
-
+        if ( hurt1 != -1 )
+            warrior[ this->count % 2 ]->hurt( hurt1, 0 );
+        if ( died( warrior[ ( count + 1 ) % 2 ] ) && died( warrior[ count % 2 ] ) ) {
             if ( !disableOutput )
                 std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " both red " << warrior[ 0 ]->name << " "
                           << warrior[ 0 ]->number << " and blue " << warrior[ 1 ]->name << " " << warrior[ 1 ]->number << " died in city " << this->count << std::endl;
@@ -675,53 +676,59 @@ void City::fight() {
             break;
         }
         else if ( died( warrior[ count % 2 ] ) ) {
-            if ( !disableOutput )
-                std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " "
-                          << ( warrior[ ( count + 1 ) % 2 ]->color == red ? "red" : "blue" ) << " " << warrior[ ( count + 1 ) % 2 ]->name << " " << warrior[ ( count + 1 ) % 2 ]->number << " killed "
-                          << ( warrior[ count % 2 ]->color == red ? "red" : "blue" ) << " " << warrior[ count % 2 ]->name << " " << warrior[ count % 2 ]->number << " in city " << this->count
-                          << " remaining " << warrior[ ( count + 1 ) % 2 ]->health << " elements" << std::endl;
-            ( ( std::shared_ptr< WarriorWithWeapon > )warrior[ ( count + 1 ) % 2 ] )->rub( ( WarriorWithWeapon* )warrior[ count % 2 ] );
-            delete warrior[ count % 2 ];
-            warrior[ count % 2 ] = nullptr;
-            if ( warrior[ ( count + 1 ) % 2 ]->name[ 0 ] == 'd' )
-                ( ( Dragon* )warrior[ ( count + 1 ) % 2 ] )->yell( this );
+            reportDied( count % 2 );
             break;
         }
-        warrior[ 0 ]->update(), warrior[ 1 ]->update();
-        int hurt2 = warrior[ ( ( count + 1 ) + 1 ) % 2 ]->attack();
-        warrior[ ( this->count + 1 ) % 2 ]->hurt( hurt2, 0 );
-        warrior[ 0 ]->update(), warrior[ 1 ]->update();
-        if ( died( warrior[ ( ( count + 1 ) + 1 ) % 2 ] ) ) {
-
+        else if ( died( warrior[ ( count + 1 ) % 2 ] ) ) {
+            reportDied( ( count + 1 ) % 2 );
+            break;
+        }
+        int hurt2 = warrior[ count % 2 ]->attack();
+        if ( hurt2 != -1 )
+            warrior[ ( this->count + 1 ) % 2 ]->hurt( hurt2, 0 );
+        if ( died( warrior[ count % 2 ] ) && died( warrior[ ( count + 1 ) % 2 ] ) ) {
             if ( !disableOutput )
                 std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " both red " << warrior[ 0 ]->name << " "
                           << warrior[ 0 ]->number << " and blue " << warrior[ 1 ]->name << " " << warrior[ 1 ]->number << " died in city " << this->count << std::endl;
-            delete warrior[ 0 ];
-            delete warrior[ 1 ];
             warrior[ 0 ] = warrior[ 1 ] = nullptr;
             break;
         }
         else if ( died( warrior[ ( count + 1 ) % 2 ] ) ) {
-            if ( !disableOutput )
-                std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " "
-                          << ( warrior[ ( ( count + 1 ) + 1 ) % 2 ]->color == red ? "red" : "blue" ) << " " << warrior[ ( ( count + 1 ) + 1 ) % 2 ]->name << " "
-                          << warrior[ ( ( count + 1 ) + 1 ) % 2 ]->number << " killed " << ( warrior[ ( count + 1 ) % 2 ]->color == red ? "red" : "blue" ) << " " << warrior[ ( count + 1 ) % 2 ]->name
-                          << " " << warrior[ ( count + 1 ) % 2 ]->number << " in city " << this->count << " remaining " << warrior[ ( ( count + 1 ) + 1 ) % 2 ]->health << " elements" << std::endl;
-            ( ( std::shared_ptr< WarriorWithWeapon > )warrior[ ( count ) % 2 ] )->rub( ( WarriorWithWeapon* )warrior[ ( count + 1 ) % 2 ] );
-            delete warrior[ ( count + 1 ) % 2 ];
-            warrior[ ( count + 1 ) % 2 ] = nullptr;
-            if ( warrior[ ( count ) % 2 ]->name[ 0 ] == 'd' )
-                ( ( Dragon* )warrior[ ( count ) % 2 ] )->yell( this );
+            reportDied( ( count + 1 ) % 2 );
             break;
         }
-        if ( hurt1 == 0 && hurt2 == 0 ) {
+        else if ( died( warrior[ count % 2 ] ) ) {
+            reportDied( count % 2 );
+            break;
+        }
+        if ( hurt1 == -1 && hurt2 == -1 ) {
             if ( !disableOutput )
                 std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " both red " << warrior[ 0 ]->name << " "
                           << warrior[ 0 ]->number << " and blue " << warrior[ 1 ]->name << " " << warrior[ 1 ]->number << " were alive in city " << this->count << std::endl;
             if ( warrior[ 0 ]->name[ 0 ] == 'd' )
-                ( ( Dragon* )warrior[ 0 ] )->yell( this );
+                warrior[ 0 ]->yell( this );
             if ( warrior[ 1 ]->name[ 0 ] == 'd' )
-                ( ( Dragon* )warrior[ 1 ] )->yell( this );
+                warrior[ 1 ]->yell( this );
+            break;
+        }
+        if ( hurt1 <= 0 && hurt2 <= 0 ) {
+            std::shared_ptr< WarriorWithWeapon > wa0 = std::dynamic_pointer_cast< WarriorWithWeapon >( warrior[ 0 ] );
+            std::shared_ptr< WarriorWithWeapon > wa1 = std::dynamic_pointer_cast< WarriorWithWeapon >( warrior[ 1 ] );
+            wa0->weaponCount -= wa0->Weapons[ bomb ].size();
+            wa0->weaponCount -= wa0->Weapons[ arrow ].size();
+            wa0->Weapons[ bomb ].clear();
+            wa0->Weapons[ arrow ].clear();
+            wa1->weaponCount -= wa1->Weapons[ bomb ].size();
+            wa1->weaponCount -= wa1->Weapons[ arrow ].size();
+            wa1->Weapons[ bomb ].clear();
+            wa1->Weapons[ arrow ].clear();
+            if ( !disableOutput )
+                std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " both red " << warrior[ 0 ]->name << " "
+                          << warrior[ 0 ]->number << " and blue " << warrior[ 1 ]->name << " " << warrior[ 1 ]->number << " were alive in city " << this->count << std::endl;
+            if ( warrior[ 0 ]->name[ 0 ] == 'd' )
+                warrior[ 0 ]->yell( this );
+            if ( warrior[ 1 ]->name[ 0 ] == 'd' )
+                warrior[ 1 ]->yell( this );
             break;
         }
     }
