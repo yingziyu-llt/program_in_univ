@@ -239,9 +239,10 @@ public:
         }
     }
     void yell( City* city ) {
-        if ( !disableOutput )
-            std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " " << ( color == red ? "red" : "blue" ) << " " << name << " "
-                      << number << " yelled in city " << city->count << std::endl;
+        if ( this->morale >= 0.8 )
+            if ( !disableOutput )
+                std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ':' << std::setw( 2 ) << std::setfill( '0' ) << minute << " " << ( color == red ? "red" : "blue" ) << " " << name << " "
+                          << number << " yelled in city " << city->count << std::endl;
     }
 };
 
@@ -342,11 +343,7 @@ int Sword::useWeapon( Warrior* warrior ) {
 
 void WarriorWithWeapon::SummonPrint( const Headquarter* H ) {
     if ( !disableOutput )
-        std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ":00" << " " << ( this->color == 0 ? "red" : "blue" ) << " " << name << " " << H->totalCount
-                  << " born" /* with strength " << this->health << ","
-  << H->Count[wa] << " " << name << " "
-  << "in " << (col == 0 ? "red" : "blue") << " headquarter"*/
-                  << std::endl;
+        std::cout << std::setw( 3 ) << std::setfill( '0' ) << hour << ":00" << " " << ( this->color == 0 ? "red" : "blue" ) << " " << name << " " << H->totalCount << " born" << std::endl;
 }
 void Warrior::walk() {
     if ( this->color == red )
