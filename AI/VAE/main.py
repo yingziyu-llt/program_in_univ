@@ -56,7 +56,7 @@ def main():
     device = "cuda"
     model = VAE(input_dim,hidden_dim,latent_dim).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-    for epoch in range(20):
+    for epoch in range(100):
         model.train()
         train_loss = 0
         total_length = 0
