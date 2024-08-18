@@ -9,3 +9,5 @@ __pychache__
 *.npy
 *.pkl
 data/
+.ipynb_checkpoints
+.virtual_documents
