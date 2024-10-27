@@ -15,10 +15,12 @@ def gradient_x(img):
     # should we use int type to calculate gradient?
     # should we conduct some pre-processing to remove noise? which kernel should we apply?
     # which kernel should we choose to calculate gradient_x?
+    img = ndimage.gaussian_filter(img, sigma=1).astype(np.float32)
     grad_x = ndimage.sobel(img, axis=1)
     return grad_x
 
 def gradient_y(img):
+    img = ndimage.gaussian_filter(img, sigma=1).astype(np.float32)
     grad_y = ndimage.sobel(img, axis=0)
     return grad_y
 
@@ -28,38 +30,45 @@ def harris_response(img, alpha, win_size):
     # You have to discover how to calculate det(M) and trace(M), and
     # remember to smooth the gradients. 
     # Avoid using too much "for" loops to speed up.
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = np.array(img).astype(np.float32)
+    height, width = img.shape
+    output = np.zeros((height, width))
+    Ixx = gradient_x(img)**2
+    Ixy = gradient_x(img) * gradient_y(img)
+    Iyy = gradient_y(img)**2
+
+    # Use uniform_filter to accumulate sums over the window
+    Sxx = ndimage.uniform_filter(Ixx, size=win_size)
+    Sxy = ndimage.uniform_filter(Ixy, size=win_size)
+    Syy = ndimage.uniform_filter(Iyy, size=win_size)
+
+    # Calculate determinant and trace
+    det = Sxx * Syy - Sxy**2
+    trace = Sxx + Syy
     
-    par_x = gradient_x(ndimage.gaussian_filter(img, sigma=1))
-    par_y = gradient_y(ndimage.gaussian_filter(img, sigma=1))
-    par_x_2 = par_x * par_x 
-    par_y_2 = par_y * par_y
-    par_xy = par_y * par_x
-    R = np.zeros_like(img)
-
-    stride_shape = (win_size, win_size)
-
-    S_par_x2 = as_strided(par_x_2,stride_shape)
-    S_par_y2 = as_strided(par_y_2,stride_shape)
-    S_par_xy = as_strided(par_xy,stride_shape)
-
-    tr = S_par_x2 + S_par_y2
-    det = S_par_x2 * S_par_y2 - S_par_xy * S_par_xy
-    R = det - alpha * (tr ** 2)
+    # Calculate the response
+    output = det - alpha * (trace**2)
     
-    return -R
+    return output
 
 def corner_selection(R, thresh, min_dist):
     # non-maximal suppression for R to get R_selection and transform selected corners to list of tuples
     # hint: 
     #   use ndimage.maximum_filter()  to achieve non-maximum suppression
     #   set those which aren’t **local maximum** to zero.
+    
 
-    R_selection = np.zeros(R.shape)
-    R_selection = ndimage.maximum_filter(R, size=min_dist, mode='constant')
-    R_selection = R_selection * (R > thresh * R_selection)
-    pix = np.argwhere(R_selection > 0)
+    # 非极大值抑制
+    local_max = ndimage.maximum_filter(R, size=min_dist, mode='constant')
 
-    return pix
+    # 阈值筛选，保留大于阈值的响应
+    corners = (R > thresh)
+    corners = corners & (R == local_max)
+    corners = np.argwhere(corners)
+    
+    return np.array(corners)
+
 
 def histogram_of_gradients(img, pix):
     # no template for coding, please implement by yourself.
@@ -72,12 +81,15 @@ def histogram_of_gradients(img, pix):
     #   5. For each blocks, calculate the number of derivatives in those directions and normalize the Histogram. 
     #   6. After that, select the prominent gradient and take it as principle orientation.
     #   7. Then rotate it’s neighbor to fit principle orientation and calculate the histogram again. 
+    
     n = 8
     m = 5
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = np.array(img).astype(np.float32)
     grad_x = gradient_x(img)
     grad_y = gradient_y(img)
     grad_dir = np.arctan2(grad_y, grad_x)
-    grad_len = grad_x * grad_x + grad_y * grad_y
+    grad_len = (grad_x * grad_x + grad_y * grad_y) ** 0.5
     features = []
     for i in pix:
         x, y = i
@@ -85,31 +97,41 @@ def histogram_of_gradients(img, pix):
         x2 = min(img.shape[0], x + m // 2)
         y1 = max(0, y - m // 2)
         y2 = min(img.shape[1], y + m // 2)
-        block = img[x1:x2, y1:y2]
-        block_grad_x = grad_x[x1:x2, y1:y2]
-        block_grad_y = grad_y[x1:x2, y1:y2]
-        grad_dir_block = grad_dir[x1:x2, y1:y2]
-        block = block.flatten()
-        grad_dir_block = grad_dir_block.flatten()
-        grad_len_block = grad_len[x1:x2, y1:y2]
-        grad_len_block = grad_len_block.flatten()
-        hist, _ = np.histogram(grad_dir_block, bins=n, weights=grad_len_block, range=(-np.pi, np.pi))
-        hist = hist / hist.sum()
-        main_dir_idx = np.argmax(hist)
-        main_dir = main_dir_idx * (2 * np.pi / n)
-        adjusted_grad_dir = (grad_dir_block - main_dir)
-        adjusted_grad_dir = np.mod(adjusted_grad_dir + np.pi, 2 * np.pi) - np.pi
-        hist, _ = np.histogram(adjusted_grad_dir, bins=n, weights=grad_len_block)
-        hist = hist / hist.sum()
-        features.append(hist)
+        block_dir = grad_dir[x1:x2, y1:y2]
+        block_len = grad_len[x1:x2, y1:y2]
+        hist = np.zeros(n)
+        hist = np.histogram(block_dir, n, weights=block_len)[0]
+        hist = hist / np.sum(hist)
+        main_dir = np.argmax(hist)
+        new_hist = np.zeros_like(hist)
+        for j in range(n):
+            new_hist[(j + main_dir) % n] = hist[j]
+        new_hist = new_hist / np.sum(new_hist)
+        features.append(new_hist)
         
     return features
+
+def visualize_R(R):
+    plt.figure(figsize=(20, 10), dpi=300)
+    plt.subplot(1, 2, 1)
+    plt.imshow(R, cmap='gray')
+    # R取值直方图
+    plt.subplot(1, 2, 2)
+    plt.hist(R.flatten(), bins=100)
+    plt.show()
+
+def visualize_corner(corners,img):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    plt.imshow(img, cmap='gray')
+    plt.scatter(corners[:, 1], corners[:, 0], c='r',s=5)
+    plt.show()
+
 
 def feature_matching(img_1, img_2):
     R1 = harris_response(img_1, 0.04, 9)
     R2 = harris_response(img_2, 0.04, 9)
-    print(R1)
     cor1 = corner_selection(R1, 0.01*np.max(R1), 5)
+    visualize_corner(cor1, img_1)
     cor2 = corner_selection(R2, 0.01*np.max(R1), 5)
     fea1 = histogram_of_gradients(img_1, cor1)
     fea2 = histogram_of_gradients(img_2, cor2)
@@ -144,6 +166,7 @@ def feature_matching(img_1, img_2):
 
 def test_matching():    
     img_1 = cv2.imread(f'{IMGDIR}/1_1.jpg')
+    # img_1 = cv2.imread(f'test_corner.jpg')
     img_2 = cv2.imread(f'{IMGDIR}/1_2.jpg')
 
     img_gray_1 = cv2.cvtColor(img_1, cv2.COLOR_BGR2GRAY)
@@ -259,7 +282,7 @@ if __name__ == '__main__':
     # call generate panorama and it should work well
     # save the generated image following the requirements
     test_matching()
-    
+    assert 1 == 0
     # an example
     img_1 = cv2.imread(f'{IMGDIR}/panoramas/parrington/prtn00.jpg')
     img_2 = cv2.imread(f'{IMGDIR}/panoramas/parrington/prtn01.jpg')
