@@ -15,13 +15,19 @@ def gradient_x(img):
     # should we use int type to calculate gradient?
     # should we conduct some pre-processing to remove noise? which kernel should we apply?
     # which kernel should we choose to calculate gradient_x?
-    img = ndimage.gaussian_filter(img, sigma=1).astype(np.float32)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = img.astype(np.float32)
+    #img = ndimage.gaussian_filter(img, sigma=0.1).astype(np.float32)
     grad_x = ndimage.sobel(img, axis=1)
+    grad_x = ndimage.gaussian_filter(grad_x, sigma=0.1).astype(np.float32)
     return grad_x
 
 def gradient_y(img):
-    img = ndimage.gaussian_filter(img, sigma=1).astype(np.float32)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = img.astype(np.float32)
+    #img = ndimage.gaussian_filter(img, sigma=0.1).astype(np.float32)
     grad_y = ndimage.sobel(img, axis=0)
+    grad_y = ndimage.gaussian_filter(grad_y, sigma=0.1).astype(np.float32)
     return grad_y
 
 def harris_response(img, alpha, win_size):
@@ -30,18 +36,20 @@ def harris_response(img, alpha, win_size):
     # You have to discover how to calculate det(M) and trace(M), and
     # remember to smooth the gradients. 
     # Avoid using too much "for" loops to speed up.
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img = np.array(img).astype(np.float32)
-    height, width = img.shape
-    output = np.zeros((height, width))
-    Ixx = gradient_x(img)**2
-    Ixy = gradient_x(img) * gradient_y(img)
-    Iyy = gradient_y(img)**2
+    grad_x = gradient_x(img)
+    grad_y = gradient_y(img)
+    Ixx = grad_x**2
+    Ixy = grad_x*grad_y
+    Iyy = grad_y**2
 
     # Use uniform_filter to accumulate sums over the window
     Sxx = ndimage.uniform_filter(Ixx, size=win_size)
     Sxy = ndimage.uniform_filter(Ixy, size=win_size)
     Syy = ndimage.uniform_filter(Iyy, size=win_size)
+
+    Sxx = ndimage.gaussian_filter(Sxx, sigma=0.1)
+    Sxy = ndimage.gaussian_filter(Sxy, sigma=0.1)
+    Syy = ndimage.gaussian_filter(Syy, sigma=0.1)
 
     # Calculate determinant and trace
     det = Sxx * Syy - Sxy**2
@@ -60,15 +68,44 @@ def corner_selection(R, thresh, min_dist):
     
 
     # 非极大值抑制
-    local_max = ndimage.maximum_filter(R, size=min_dist, mode='constant')
-
+    local_max = ndimage.maximum_filter(R, size=3)
     # 阈值筛选，保留大于阈值的响应
-    corners = (R > thresh)
-    corners = corners & (R == local_max)
-    corners = np.argwhere(corners)
-    
-    return np.array(corners)
+    nms = (R == local_max)
+    corners = np.zeros_like(R)
+    corners[nms & (R > thresh)] = R[nms & (R > thresh)]
+    corners = np.argwhere(corners > 0)
 
+    values = R[corners[:, 0], corners[:, 1]]
+    # 按照阈值从大到小排序
+    corners = corners[np.argsort(values)[::-1]]
+    tree = spatial.KDTree(corners)
+    keep = np.ones(len(corners), dtype=bool)
+    for i,point in enumerate(corners):
+        if keep[i] == 1:
+            indices = tree.query_ball_point(point, min_dist)
+            keep[np.setdiff1d(indices, [i])] = 0
+
+    corners = corners[keep]
+    return corners
+
+
+def split_cell(img,x,y,blockSize,cellSize):
+    def mirror(ori,total):
+        if ori < 0:
+            return -ori - 1
+        elif ori >= total:
+            return 2 * total - ori - 1
+        else:
+            return ori
+    
+    cells = np.empty((blockSize * blockSize,cellSize,cellSize))
+    for i in range(blockSize):
+        for j in range(blockSize):
+            for k in range(cellSize):
+                for l in range(cellSize):
+                    cells[i * blockSize + j,k,l] = img[mirror(x + i * cellSize + k, img.shape[0]), mirror(y + j * cellSize + l, img.shape[1])]
+    return cells
+    
 
 def histogram_of_gradients(img, pix):
     # no template for coding, please implement by yourself.
@@ -82,34 +119,47 @@ def histogram_of_gradients(img, pix):
     #   6. After that, select the prominent gradient and take it as principle orientation.
     #   7. Then rotate it’s neighbor to fit principle orientation and calculate the histogram again. 
     
-    n = 8
-    m = 5
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img = np.array(img).astype(np.float32)
+    block_size = 2
+    cell_size = 8
+    divide = 9
     grad_x = gradient_x(img)
     grad_y = gradient_y(img)
-    grad_dir = np.arctan2(grad_y, grad_x)
-    grad_len = (grad_x * grad_x + grad_y * grad_y) ** 0.5
-    features = []
-    for i in pix:
-        x, y = i
-        x1 = max(0, x - m // 2)
-        x2 = min(img.shape[0], x + m // 2)
-        y1 = max(0, y - m // 2)
-        y2 = min(img.shape[1], y + m // 2)
-        block_dir = grad_dir[x1:x2, y1:y2]
-        block_len = grad_len[x1:x2, y1:y2]
-        hist = np.zeros(n)
-        hist = np.histogram(block_dir, n, weights=block_len)[0]
-        hist = hist / np.sum(hist)
-        main_dir = np.argmax(hist)
-        new_hist = np.zeros_like(hist)
-        for j in range(n):
-            new_hist[(j + main_dir) % n] = hist[j]
-        new_hist = new_hist / np.sum(new_hist)
-        features.append(new_hist)
+
+    grad_dir = np.arctan2(grad_y , grad_x)
+    grad_mag = np.sqrt(grad_x**2 + grad_y**2)
+    grad_dir += np.pi
+    features = np.empty((0, block_size * block_size * divide))
+    for p in pix:
+        x, y = p
+        cell_dir = split_cell(grad_dir,x,y,block_size,cell_size)
+        cell_mag = split_cell(grad_mag,x,y,block_size,cell_size)
+        cell_feature = np.zeros((block_size * block_size, divide))
+
+        for i in range(block_size * block_size):
+            cell_feature[i] = np.histogram(cell_dir[i],divide,[0,2*np.pi],weights=cell_mag[i])[0]
         
+        cell_feature = cell_feature.flatten()
+        
+        cell_feature_norm = np.linalg.norm(cell_feature)
+
+        if cell_feature_norm != 0:
+            cell_feature = cell_feature / cell_feature_norm
+
+        main_dir = np.mod(np.argmax(cell_feature),divide)
+        
+        feature = cell_feature
+        # print(feature.shape)
+
+        roll_feat = np.array([])
+
+        for k in range(block_size**2):
+            tmp = cell_feature[k * divide:(k + 1) * divide]
+            tmp = np.roll(tmp, -main_dir)
+            roll_feat = np.append(roll_feat, tmp)
+        features = np.concatenate((features, [roll_feat]), axis=0)
+    
     return features
+
 
 def visualize_R(R):
     plt.figure(figsize=(20, 10), dpi=300)
@@ -131,7 +181,6 @@ def feature_matching(img_1, img_2):
     R1 = harris_response(img_1, 0.04, 9)
     R2 = harris_response(img_2, 0.04, 9)
     cor1 = corner_selection(R1, 0.01*np.max(R1), 5)
-    visualize_corner(cor1, img_1)
     cor2 = corner_selection(R2, 0.01*np.max(R1), 5)
     fea1 = histogram_of_gradients(img_1, cor1)
     fea2 = histogram_of_gradients(img_2, cor2)
@@ -166,7 +215,6 @@ def feature_matching(img_1, img_2):
 
 def test_matching():    
     img_1 = cv2.imread(f'{IMGDIR}/1_1.jpg')
-    # img_1 = cv2.imread(f'test_corner.jpg')
     img_2 = cv2.imread(f'{IMGDIR}/1_2.jpg')
 
     img_gray_1 = cv2.cvtColor(img_1, cv2.COLOR_BGR2GRAY)
@@ -186,9 +234,9 @@ def test_matching():
 
     N = len(pixels_1)
     for i in range(N):
-        x1, y1 = pixels_1[i]
-        x2, y2 = pixels_2[i]
-        plt.plot([x1, x2+W_1], [y1, y2])
+        y1, x1 = pixels_1[i]
+        y2, x2 = pixels_2[i]
+        plt.plot([x1, x2+W_1], [y1, y2],linewidth=0.4)
 
     # plt.show()
     plt.savefig('test.jpg')
