@@ -5,6 +5,7 @@ from scipy import ndimage, spatial
 import cv2
 from os import listdir
 import matplotlib.pyplot as plt
+from utils import *
 
 from numpy.lib.stride_tricks import as_strided
 IMGDIR = 'Problem2Images'
@@ -18,16 +19,14 @@ def gradient_x(img):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img = img.astype(np.float32)
     #img = ndimage.gaussian_filter(img, sigma=0.1).astype(np.float32)
-    grad_x = ndimage.sobel(img, axis=1)
-    grad_x = ndimage.gaussian_filter(grad_x, sigma=0.1).astype(np.float32)
+    grad_x = ndimage.sobel(img, axis=1,mode='reflect')
     return grad_x
 
 def gradient_y(img):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img = img.astype(np.float32)
     #img = ndimage.gaussian_filter(img, sigma=0.1).astype(np.float32)
-    grad_y = ndimage.sobel(img, axis=0)
-    grad_y = ndimage.gaussian_filter(grad_y, sigma=0.1).astype(np.float32)
+    grad_y = ndimage.sobel(img, axis=0,mode='reflect')
     return grad_y
 
 def harris_response(img, alpha, win_size):
@@ -42,7 +41,6 @@ def harris_response(img, alpha, win_size):
     Ixy = grad_x*grad_y
     Iyy = grad_y**2
 
-    # Use uniform_filter to accumulate sums over the window
     Sxx = ndimage.uniform_filter(Ixx, size=win_size)
     Sxy = ndimage.uniform_filter(Ixy, size=win_size)
     Syy = ndimage.uniform_filter(Iyy, size=win_size)
@@ -51,11 +49,9 @@ def harris_response(img, alpha, win_size):
     Sxy = ndimage.gaussian_filter(Sxy, sigma=0.1)
     Syy = ndimage.gaussian_filter(Syy, sigma=0.1)
 
-    # Calculate determinant and trace
     det = Sxx * Syy - Sxy**2
     trace = Sxx + Syy
     
-    # Calculate the response
     output = det - alpha * (trace**2)
     
     return output
@@ -65,10 +61,8 @@ def corner_selection(R, thresh, min_dist):
     # hint: 
     #   use ndimage.maximum_filter()  to achieve non-maximum suppression
     #   set those which aren’t **local maximum** to zero.
-    
-
     # 非极大值抑制
-    local_max = ndimage.maximum_filter(R, size=3)
+    local_max = ndimage.maximum_filter(R, size=min_dist)
     # 阈值筛选，保留大于阈值的响应
     nms = (R == local_max)
     corners = np.zeros_like(R)
@@ -89,24 +83,6 @@ def corner_selection(R, thresh, min_dist):
     return corners
 
 
-def split_cell(img,x,y,blockSize,cellSize):
-    def mirror(ori,total):
-        if ori < 0:
-            return -ori - 1
-        elif ori >= total:
-            return 2 * total - ori - 1
-        else:
-            return ori
-    
-    cells = np.empty((blockSize * blockSize,cellSize,cellSize))
-    for i in range(blockSize):
-        for j in range(blockSize):
-            for k in range(cellSize):
-                for l in range(cellSize):
-                    cells[i * blockSize + j,k,l] = img[mirror(x + i * cellSize + k, img.shape[0]), mirror(y + j * cellSize + l, img.shape[1])]
-    return cells
-    
-
 def histogram_of_gradients(img, pix):
     # no template for coding, please implement by yourself.
     # You can refer to implementations on Github or other websites
@@ -119,15 +95,17 @@ def histogram_of_gradients(img, pix):
     #   6. After that, select the prominent gradient and take it as principle orientation.
     #   7. Then rotate it’s neighbor to fit principle orientation and calculate the histogram again. 
     
-    block_size = 2
+    
+    block_size = 4
     cell_size = 8
-    divide = 9
+    divide = 8
     grad_x = gradient_x(img)
     grad_y = gradient_y(img)
 
     grad_dir = np.arctan2(grad_y , grad_x)
     grad_mag = np.sqrt(grad_x**2 + grad_y**2)
     grad_dir += np.pi
+    grad_dir = np.mod(grad_dir, 2*np.pi)
     features = np.empty((0, block_size * block_size * divide))
     for p in pix:
         x, y = p
@@ -138,18 +116,15 @@ def histogram_of_gradients(img, pix):
         for i in range(block_size * block_size):
             cell_feature[i] = np.histogram(cell_dir[i],divide,[0,2*np.pi],weights=cell_mag[i])[0]
         
+        feature_sum = cell_feature.sum(axis=0)
+
         cell_feature = cell_feature.flatten()
-        
         cell_feature_norm = np.linalg.norm(cell_feature)
 
-        if cell_feature_norm != 0:
+        if cell_feature_norm > 0:
             cell_feature = cell_feature / cell_feature_norm
 
-        main_dir = np.mod(np.argmax(cell_feature),divide)
-        
-        feature = cell_feature
-        # print(feature.shape)
-
+        main_dir = np.argmax(feature_sum)
         roll_feat = np.array([])
 
         for k in range(block_size**2):
@@ -159,23 +134,6 @@ def histogram_of_gradients(img, pix):
         features = np.concatenate((features, [roll_feat]), axis=0)
     
     return features
-
-
-def visualize_R(R):
-    plt.figure(figsize=(20, 10), dpi=300)
-    plt.subplot(1, 2, 1)
-    plt.imshow(R, cmap='gray')
-    # R取值直方图
-    plt.subplot(1, 2, 2)
-    plt.hist(R.flatten(), bins=100)
-    plt.show()
-
-def visualize_corner(corners,img):
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    plt.imshow(img, cmap='gray')
-    plt.scatter(corners[:, 1], corners[:, 0], c='r',s=5)
-    plt.show()
-
 
 def feature_matching(img_1, img_2):
     R1 = harris_response(img_1, 0.04, 9)
@@ -214,8 +172,8 @@ def feature_matching(img_1, img_2):
     return pixels_1, pixels_2
 
 def test_matching():    
-    img_1 = cv2.imread(f'{IMGDIR}/1_1.jpg')
-    img_2 = cv2.imread(f'{IMGDIR}/1_2.jpg')
+    img_1 = cv2.imread(f'{IMGDIR}/2_1.jpg')
+    img_2 = cv2.imread(f'{IMGDIR}/2_2.jpg')
 
     img_gray_1 = cv2.cvtColor(img_1, cv2.COLOR_BGR2GRAY)
     img_gray_2 = cv2.cvtColor(img_2, cv2.COLOR_BGR2GRAY)
@@ -236,18 +194,27 @@ def test_matching():
     for i in range(N):
         y1, x1 = pixels_1[i]
         y2, x2 = pixels_2[i]
-        plt.plot([x1, x2+W_1], [y1, y2],linewidth=0.4)
+        plt.plot([x1, x2+W_1], [y1, y2],linewidth=1)
 
     # plt.show()
-    plt.savefig('test.jpg')
+    plt.savefig('match2.jpg')
 
 def compute_homography(pixels_1, pixels_2):
     # compute the best-fit homography using the Singular Value Decomposition (SVD)
     # homography matrix is a (3,3) matrix consisting rotation, translation and projection information.
     # consider how to form matrix A for U, S, V = np.linalg.svd((np.transpose(A)).dot(A))
     # homo_matrix = np.reshape(V[np.argmin(S)], (3, 3))
-    # TODO
-    homo_matrix = []
+    A = []
+    for (x1, y1), (x2, y2) in zip(pixels_1, pixels_2):
+        x1,y1 = y1, x1
+        x2,y2 = y2, x2
+        A.append([x1, y1, 1, 0, 0, 0, -x1 * x2, -y1 * x2, -x2])
+        A.append([0, 0, 0, x1, y1, 1, -x1 * y2, -y1 * y2, -y2])
+    A = np.array(A)
+
+    U, S, V = np.linalg.svd((np.transpose(A)).dot(A))
+    homo_matrix = np.reshape(V[np.argmin(S)], (3, 3))
+    
     return homo_matrix
 
 def align_pair(pixels_1, pixels_2):
@@ -255,8 +222,28 @@ def align_pair(pixels_1, pixels_2):
     # and \verb|compute_homography| to calculate homo_matrix
     # implement RANSAC to compute the optimal alignment.
     # you can refer to implementations online.
-    est_homo = []
-    return est_homo
+    iteration_num = 5000
+    max_inliers = []
+    H_max = None
+    for _ in range(iteration_num):
+        indices = np.random.choice(len(pixels_1), 4, replace=False)
+        sample_pixels_1 = [pixels_1[i] for i in indices]
+        sample_pixels_2 = [pixels_2[i] for i in indices]
+
+        H = compute_homography(sample_pixels_1, sample_pixels_2)
+
+        inliers = compute_inliers(H, pixels_1, pixels_2)
+
+        if(len(inliers) > len(max_inliers)):
+            max_inliers = inliers
+            H_max = H
+
+    if H_max is not None and len(max_inliers) > 4:
+        inlier_pixels_1 = [pixels_1[i] for i in max_inliers]
+        inlier_pixels_2 = [pixels_2[i] for i in max_inliers]
+        H_max = compute_homography(inlier_pixels_1, inlier_pixels_2)
+
+    return H_max
 
 def stitch_blend(img_1, img_2, est_homo):
     # hint: 
@@ -301,7 +288,6 @@ def stitch_blend(img_1, img_2, est_homo):
     est_img = est_img_1*alpha1 + est_img_2*alpha2
     return est_img
 
-
 def generate_panorama(ordered_img_seq):
     len = np.shape(ordered_img_seq)[0]
     mid = int(len/2) # middle anchor
@@ -309,14 +295,22 @@ def generate_panorama(ordered_img_seq):
     j = mid+1
     principle_img = ordered_img_seq[mid]
     while(j < len):
-        pixels1, pixels2 = feature_matching(ordered_img_seq[j], principle_img)
+        try:
+            pixels1, pixels2 = feature_matching(ordered_img_seq[j], principle_img)
+        except:
+            print("feature matching error")
+            break
         homo_matrix = align_pair(pixels1, pixels2)
         principle_img = stitch_blend(
             ordered_img_seq[j], principle_img, homo_matrix)
         principle_img=np.uint8(principle_img)
         j = j+1  
     while(i >= 0):
-        pixels1, pixels2 = feature_matching(ordered_img_seq[i], principle_img)
+        try:
+            pixels1, pixels2 = feature_matching(ordered_img_seq[i], principle_img)
+        except:
+            print("feature matching error")
+            break
         homo_matrix = align_pair(pixels1, pixels2)
         principle_img = stitch_blend(
             ordered_img_seq[i], principle_img, homo_matrix)
@@ -325,18 +319,18 @@ def generate_panorama(ordered_img_seq):
     est_pano = principle_img
     return est_pano
 
+
 if __name__ == '__main__':
     # make image list
     # call generate panorama and it should work well
     # save the generated image following the requirements
     test_matching()
-    assert 1 == 0
     # an example
-    img_1 = cv2.imread(f'{IMGDIR}/panoramas/parrington/prtn00.jpg')
-    img_2 = cv2.imread(f'{IMGDIR}/panoramas/parrington/prtn01.jpg')
-    img_3 = cv2.imread(f'{IMGDIR}/panoramas/parrington/prtn02.jpg')
-    img_4 = cv2.imread(f'{IMGDIR}/panoramas/parrington/prtn03.jpg')
-    img_5 = cv2.imread(f'{IMGDIR}/panoramas/parrington/prtn04.jpg')
+    img_1 = cv2.imread(f'{IMGDIR}/panoramas/Xue-Mountain-Entrance/DSC_0176.jpg')
+    img_2 = cv2.imread(f'{IMGDIR}/panoramas/Xue-Mountain-Entrance/DSC_0177.jpg')
+    img_3 = cv2.imread(f'{IMGDIR}/panoramas/Xue-Mountain-Entrance/DSC_0178.jpg')
+    img_4 = cv2.imread(f'{IMGDIR}/panoramas/Xue-Mountain-Entrance/DSC_0179.jpg')
+    img_5 = cv2.imread(f'{IMGDIR}/panoramas/Xue-Mountain-Entrance/DSC_0180.jpg')
     img_list=[]
     img_list.append(img_1)
     img_list.append(img_2)
