@@ -1,4 +1,3 @@
-library(readxl)
 library(ggplot2)
 
 # 读取数据

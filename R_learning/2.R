@@ -1,26 +1,29 @@
 library(readxl)
 library(ggplot2)
-my_data <- read_excel("~/Downloads/data.xlsx", sheet = 1)
-my_vector1 <- unlist(my_data[1])
-my_vector2 <- unlist(my_data[2])
+all_data = read.csv("./data.csv")
+standard_1 = unlist(all_data[1])
+standard_2 = unlist(all_data[2])
+standard_ave = (standard_1 + standard_2) / 2.0
+standard_ave = head(standard_ave,-2)
+test1 = unlist(all_data[3])
+test2 = unlist(all_data[4])
+test_ave = (test1 + test2) / 2.0
 
-average <- (my_vector1 + my_vector2) / 2
-data <- average[1:6]
-e <- my_vector1 - my_vector2
-maxn <- max(abs(e))
-x_row <- 0:5
-my_data <- data.frame(x_row,data)
-linear_Model <- lm(data~x_row,my_data)
-slope <- coef(linear_Model)[2]
-intercept <- coef(linear_Model)[1]
-calc_x1 <- (average[7] - intercept) / slope
-calc_x2 <- (average[8] - intercept) / slope
-calc_x1 <- calc_x1 * 25 / 2
-calc_x2 <- calc_x2 * 5 / 2
 
-plot(my_data$x_row, my_data$data, main="蛋白质含量和吸光度标准曲线", xlab="蛋白质含量(g)", ylab="吸光度")  
-abline(linear_Model, col="red")
-text(x=min(x_row) + 0.3,y=max(data),labels = paste("R^2=",round((summary(linear_Model)$r.squared),5)))
-print(average)
-print(my_vector1)
-print(my_vector2)
+standard_protein = 200 * c(20,16,12,8,4,0) / 20
+
+df = data.frame(standard_ave,standard_protein)
+
+ggplot(df,aes(x=standard_protein,y=standard_ave))+geom_point()+geom_smooth(method = "lm")
+
+l = lm(standard_ave~standard_protein,data = df)
+
+summary(l)
+
+k = coefficients(l)[2]
+b = coefficients(l)[1]
+
+test_ave = (test1 + test2) / 2
+test_protein = (test_ave - b)/k
+
+test_protein = test_protein * 20 / 5
