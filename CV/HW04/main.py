@@ -37,29 +37,36 @@ def visualize_disparity_map(disparity_map, gt_map, save_path=None):
 
 '''
 非插值版本
+'''
+'''
 def compute_disparity_for_row(args):
     """计算某一行的视差"""
     ref_img, sec_img, y, window_half, dmin, dmax, matching_function = args
     H, W = ref_img.shape
+    ref_img = ref_img.astype(np.float32)
+    sec_img = sec_img.astype(np.float32)
+    ref_img /= 255.0
+    sec_img /= 255.0
     disparity_row = np.zeros(W, dtype=np.float32)
 
     for x in range(window_half, W - window_half):
-        ref_window = ref_img[y - window_half:y + window_half + 1, x - window_half:x + window_half + 1]
+        ref_window = ref_img[y - window_half:y + window_half + 1, x - window_half:x + window_half + 1].flatten()
         best_disparity = 0
         best_cost = np.inf
 
+        # 计算整数视差代价
         for d in range(dmin, dmax + 1):
             if x - d - window_half < 0:
                 continue
-            sec_window = sec_img[y - window_half:y + window_half + 1, x - d - window_half:x - d + window_half + 1]
+            sec_window = sec_img[y - window_half:y + window_half + 1, x - d - window_half:x - d + window_half + 1].flatten()
 
             if matching_function == 'SSD':
                 cost = np.sum((ref_window - sec_window) ** 2)
             elif matching_function == 'SAD':
                 cost = np.sum(np.abs(ref_window - sec_window))
             elif matching_function == 'normalized_correlation':
-                cost = -np.sum((ref_window - ref_window.mean()) * (sec_window - sec_window.mean())) / (
-                        ref_window.std() * sec_window.std())
+                cost = -np.sum(sec_window * ref_window) / np.sqrt(np.sum(sec_window ** 2) * np.sum(ref_window ** 2))
+
 
             if cost < best_cost:
                 best_cost = cost
@@ -68,6 +75,7 @@ def compute_disparity_for_row(args):
         disparity_row[x] = best_disparity
     return (y, disparity_row)
 '''
+
 
 def compute_disparity_for_row(args):
     """计算某一行的视差，支持子像素插值"""
@@ -80,7 +88,7 @@ def compute_disparity_for_row(args):
     disparity_row = np.zeros(W, dtype=np.float32)
 
     for x in range(window_half, W - window_half):
-        ref_window = ref_img[y - window_half:y + window_half + 1, x - window_half:x + window_half + 1]
+        ref_window = ref_img[y - window_half:y + window_half + 1, x - window_half:x + window_half + 1].flatten()
         best_disparity = 0
         best_cost = np.inf
         costs = []
@@ -90,15 +98,14 @@ def compute_disparity_for_row(args):
             if x - d - window_half < 0:
                 costs.append(np.inf)
                 continue
-            sec_window = sec_img[y - window_half:y + window_half + 1, x - d - window_half:x - d + window_half + 1]
+            sec_window = sec_img[y - window_half:y + window_half + 1, x - d - window_half:x - d + window_half + 1].flatten()
 
             if matching_function == 'SSD':
                 cost = np.sum((ref_window - sec_window) ** 2)
             elif matching_function == 'SAD':
                 cost = np.sum(np.abs(ref_window - sec_window))
             elif matching_function == 'normalized_correlation':
-                cost = -np.sum((ref_window - ref_window.mean()) * (sec_window - sec_window.mean())) / (
-                        ref_window.std() * sec_window.std())
+                cost = -np.sum(sec_window * ref_window) / np.sqrt(np.sum(sec_window ** 2) * np.sum(ref_window ** 2))
 
             costs.append(cost)
 
@@ -144,17 +151,13 @@ def task1_compute_disparity_map_simple(
     dmin, dmax = disparity_range
     disparity_map = np.zeros((H, W), dtype=np.float32)
 
-    # 构建任务参数列表
     tasks = [
             (ref_img, sec_img, y, window_half, dmin, dmax, matching_function)
             for y in range(window_half, H - window_half)
         ]
 
-    # 使用进程池进行并行计算
     with mp.Pool() as pool:
         results = pool.map(compute_disparity_for_row, tasks)
-
-        # 收集结果
         for y, disparity_row in results:
             disparity_map[y, :] = disparity_row
 
@@ -190,14 +193,14 @@ def task1_simple_disparity(ref_img, sec_img, gt_map, img_name='tsukuba'):
             visualize_disparity_map(
                 disparity_map, gt_map,
                 save_path=f"output/task1_{img_name}_{window_size}_{dmin}_{dmax}_{matching_function}.png")
-    '''plt.plot([row[0] for row in time_list],label='SSD')
+    '''
+    plt.plot([row[0] for row in time_list],label='SSD')
     plt.plot([row[1] for row in time_list],label='SAD')
     plt.plot([row[2] for row in time_list],label='normalized_correlation')
     plt.legend()
     plt.xlabel('window_size')
     plt.ylabel('time')
-    plt.show()'''
-    '''
+    plt.show()
     window_size = 10
     matching_function = 'SSD'
     time_list = []
@@ -294,8 +297,8 @@ def task3_compute_disparity_map_dp(ref_img, sec_img):
                 if x - d < window_size:
                     continue
                 # 计算左右窗口的代价
-                ref_window = ref_img[y - window_size:y + window_size, x - window_size:x + window_size]
-                sec_window = sec_img[y - window_size:y + window_size, x - d - window_size:x - d + window_size]
+                ref_window = ref_img[y - window_size:y + window_size, x - window_size:x + window_size].flatten()
+                sec_window = sec_img[y - window_size:y + window_size, x - d - window_size:x - d + window_size].flatten()
                 e[d, x] = np.sum((ref_window - sec_window) ** 2)
         for i in range(ref_img.shape[1]):
             c[i,0] = i * Occlusion
@@ -380,13 +383,13 @@ def main(tasks):
     # Task 1: Simple Disparity Algorithm
     if '1' in tasks:
         print('Running task1 ...')
-        disparity_maps = task1_simple_disparity(tsukuba_img1_gray, tsukuba_img2_gray, tsukuba_gt, img_name='tsukuba_interpolation')
+        disparity_maps = task1_simple_disparity(tsukuba_img1_gray, tsukuba_img2_gray, tsukuba_gt, img_name='tsukuba ')
 
         #####################################################
         # If you want to run on moebius images,             #
         # parallelizing with multiprocessing is recommended #
         #####################################################
-        #task1_simple_disparity(moebius_img1_gray, moebius_img2_gray, moebius_gt, img_name='moebius')
+        task1_simple_disparity(moebius_img1_gray, moebius_img2_gray, moebius_gt, img_name='moebius')
 
         if '2' in tasks:
             print('Running task2 with disparity maps from task1 ...')

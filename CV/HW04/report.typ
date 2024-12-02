@@ -31,29 +31,38 @@
 
 ==== 2.window size对结果的影响
 
-#figure(table(columns: 2,image("pic/task1_tsukuba_1_0_15_SAD.png"),image("pic/task1_tsukuba_2_0_15_SAD.png"),image("pic/task1_tsukuba_3_0_15_SAD.png"),image("pic/task1_tsukuba_4_0_15_SAD.png"),image("pic/task1_tsukuba_5_0_15_SAD.png"),image("pic/task1_tsukuba_10_0_15_SAD.png"),image("pic/task1_tsukuba_15_0_15_SAD.png"),image("pic/task1_tsukuba_20_0_15_SAD.png"),image("pic/task1_tsukuba_25_0_15_SAD.png"),image("pic/task1_tsukuba_30_0_15_SAD.png")),caption: "Disparity vs. window size,SAD
+#figure(table(columns: 2,image("pic/task1_tsukuba _1_0_15_SAD.png"),image("pic/task1_tsukuba _2_0_15_SAD.png"),image("pic/task1_tsukuba _3_0_15_SAD.png"),image("pic/task1_tsukuba _4_0_15_SAD.png"),image("pic/task1_tsukuba _5_0_15_SAD.png"),image("pic/task1_tsukuba _10_0_15_SAD.png"),image("pic/task1_tsukuba _15_0_15_SAD.png"),image("pic/task1_tsukuba _20_0_15_SAD.png"),image("pic/task1_tsukuba _25_0_15_SAD.png"),image("pic/task1_tsukuba _30_0_15_SAD.png")),caption: "Disparity vs. window size,SAD
 winsize=1,2,3,4,5,10,15,20,25,30")
 
-#figure(table(columns: 2,image("pic/task1_tsukuba_1_0_15_SSD.png"),image("pic/task1_tsukuba_2_0_15_SSD.png"),image("pic/task1_tsukuba_3_0_15_SSD.png"),image("pic/task1_tsukuba_4_0_15_SSD.png"),image("pic/task1_tsukuba_5_0_15_SSD.png"),image("pic/task1_tsukuba_10_0_15_SSD.png"),image("pic/task1_tsukuba_15_0_15_SSD.png"),image("pic/task1_tsukuba_20_0_15_SSD.png"),image("pic/task1_tsukuba_25_0_15_SSD.png"),image("pic/task1_tsukuba_29_0_15_SSD.png")),caption: "Disparity vs. window size,SSD
+#figure(table(columns: 2,image("pic/task1_tsukuba _1_0_15_SSD.png"),image("pic/task1_tsukuba _2_0_15_SSD.png"),image("pic/task1_tsukuba _3_0_15_SSD.png"),image("pic/task1_tsukuba _4_0_15_SSD.png"),image("pic/task1_tsukuba _5_0_15_SSD.png"),image("pic/task1_tsukuba _10_0_15_SSD.png"),image("pic/task1_tsukuba _15_0_15_SSD.png"),image("pic/task1_tsukuba _20_0_15_SSD.png"),image("pic/task1_tsukuba _25_0_15_SSD.png"),image("pic/task1_tsukuba _30_0_15_SSD.png")),caption: "Disparity vs. window size,SSD
 winsize=1,2,3,4,5,10,15,20,25,29")
 
-#figure(table(columns: 2,image("pic/task1_tsukuba_1_0_15_normalized_correlation.png"),image("pic/task1_tsukuba_2_0_15_normalized_correlation.png"),image("pic/task1_tsukuba_3_0_15_normalized_correlation.png"),image("pic/task1_tsukuba_4_0_15_normalized_correlation.png"),image("pic/task1_tsukuba_5_0_15_normalized_correlation.png"),image("pic/task1_tsukuba_10_0_15_normalized_correlation.png"),image("pic/task1_tsukuba_15_0_15_normalized_correlation.png"),image("pic/task1_tsukuba_20_0_15_normalized_correlation.png"),image("pic/task1_tsukuba_25_0_15_normalized_correlation.png"),image("pic/task1_tsukuba_30_0_15_normalized_correlation.png")),caption: "Disparity vs. window size,normalized_correlation
+#figure(table(columns: 2,image("pic/task1_tsukuba _1_0_15_normalized_correlation.png"),image("pic/task1_tsukuba _2_0_15_normalized_correlation.png"),image("pic/task1_tsukuba _3_0_15_normalized_correlation.png"),image("pic/task1_tsukuba _4_0_15_normalized_correlation.png"),image("pic/task1_tsukuba _5_0_15_normalized_correlation.png"),image("pic/task1_tsukuba _10_0_15_normalized_correlation.png"),image("pic/task1_tsukuba _15_0_15_normalized_correlation.png"),image("pic/task1_tsukuba _20_0_15_normalized_correlation.png"),image("pic/task1_tsukuba _25_0_15_normalized_correlation.png"),image("pic/task1_tsukuba _30_0_15_normalized_correlation.png")),caption: "Disparity vs. window size,normalized_correlation
 winsize=1,2,3,4,5,10,15,20,25,30")
 
-#indent 结果如上，可以看到，对于三种方法，随着窗口大小的增大，disparity的结果变得更加平滑，但是，SAD的图像始终为较为混乱的色块，效果始终不好。同时需要注意的是，其余两个虽然winsize增加减少了噪点，但是也减少了细节。在过大的winsize下，台灯的边缘和周围环境混淆，这不是一个好的结果。
+#indent 结果如上，可以看到，在window size增大的过程中，噪点数量逐渐减小，但是细节也逐渐丢失。所以，选择一个合适的window size是很重要的。这里选择15作为winsize。
+
+为了进一步优化效果，使用二次插值方法，其公式为（来自ChatGPT)
+
+$ d = d_0 + (C(d_0 - 1) - C(d_0 + 1)) / (2 (C(d_0 - 1) - 2C(d_0) + C(d_0 + 1))) $ 其中$d_0$为$"argmin" C(d)$
+
+#figure(table(image("pic/task1_tsukuba _15_0_15_SSD.png"),image("pic/task1_tsukuba_interpolation_15_0_15_SSD.png")),caption: "插值前后对比")
+
+
+仔细观察可以看到，边缘点有了更加光滑的边缘，且有了更多的细节。
 
 ==== 3. max disparity对结果的影响
 
 #indent 为了方便起见，我们选择winsize=10,SSD,max_disparity从1到63的情况进行测试。
 
-#figure(table(columns: 2,image("pic/task1_tsukuba_10_0_1_SSD.png"),image("pic/task1_tsukuba_10_0_2_SSD.png"),image("pic/task1_tsukuba_10_0_3_SSD.png"),image("pic/task1_tsukuba_10_0_6_SSD.png"),image("pic/task1_tsukuba_10_0_8_SSD.png"),image("pic/task1_tsukuba_10_0_10_SSD.png"),image("pic/task1_tsukuba_10_0_15_SSD.png"),image("pic/task1_tsukuba_10_0_20_SSD.png"),image("pic/task1_tsukuba_10_0_30_SSD.png"),image("pic/task1_tsukuba_10_0_40_SSD.png")),caption: "Disparity vs. max disparity,SSD
+#figure(table(columns: 2,image("pic/task1_tsukuba _10_0_1_SSD.png"),image("pic/task1_tsukuba _10_0_2_SSD.png"),image("pic/task1_tsukuba _10_0_3_SSD.png"),image("pic/task1_tsukuba _10_0_6_SSD.png"),image("pic/task1_tsukuba _10_0_8_SSD.png"),image("pic/task1_tsukuba _10_0_10_SSD.png"),image("pic/task1_tsukuba _10_0_15_SSD.png"),image("pic/task1_tsukuba _10_0_20_SSD.png"),image("pic/task1_tsukuba _10_0_30_SSD.png"),image("pic/task1_tsukuba _10_0_40_SSD.png")),caption: "Disparity vs. max disparity,SSD
 max_disparity=1,2,3,6,8,10,15,20,30,40")
 
 #indent 后面的图依次变暗是由于一些失配点的disparity过高，归一化后导致匹配的点绘制时偏暗。容易看到，当disparity增加到一个合适的值之后，其继续增大就没有什么意义了。
 
 ==== 4.不同方法的比较
 
-#indent 从上面的图片可以很直观的看出，normalized_correlation和SSD效果差异不大，最差的是SAD。
+#indent 从上面的图片可以很直观的看出，三种方法做出的结果实际上差异很有限。相对来说，SSD结果最光滑，SAD次之，normalized_correlation有最多的噪点。
 
 === Disscussion
 
@@ -68,7 +77,7 @@ max_disparity=1,2,3,6,8,10,15,20,30,40")
 ==== 2. 选取超参计算结果
 效果如下：
 
-#figure(image("pic/task1_tsukuba_15_0_64_SSD.png"),caption: "Disparity=64, winsize=15, method=SSD")
+#figure(image("pic/task1_tsukuba _15_0_15_SSD.png"),caption: "Disparity=64, winsize=15, method=SSD")
 #figure(image("pic/task1_moebius_15_0_64_SSD.png"))
 
 效果尚可。
@@ -86,13 +95,7 @@ max_disparity=1,2,3,6,8,10,15,20,30,40")
 
 === Results
 
-为了进一步优化效果，使用二次插值方法，其公式为（来自ChatGPT)
 
-$ d = d_0 + (C(d_0 - 1) - C(d_0 + 1)) / (2 (C(d_0 - 1) - 2C(d_0) + C(d_0 + 1))) $ 其中$d_0$为$"argmin" C(d)$
-
-#figure(table(image("pic/task1_tsukuba_15_0_64_SSD.png"),image("pic/task1_tsukuba_interpolation_15_0_64_SSD.png")),caption: "插值前后对比")
-
-仔细观察可以看到，边缘点有了更加光滑的边缘，且有了更多的细节。
 
 #figure(table(image("task2_SSD.png",height: 30%),image("task2_SSD_inter.png",height:30%),image("task2_opencv.png",height:30%)),caption: "插值前、后、opencv实现对比")
 
