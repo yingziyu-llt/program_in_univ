@@ -8,6 +8,8 @@ __pychache__
 *.pyc
 *.npy
 *.pkl
+*.pth
+runs/
 data/
 .ipynb_checkpoints
 .virtual_documents
