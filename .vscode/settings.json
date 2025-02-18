@@ -98,5 +98,6 @@
         "stacktrace": "cpp",
         "syncstream": "cpp",
         "typeindex": "cpp"
-    }
+    },
+    "cmake.ignoreCMakeListsMissing": true
 }
