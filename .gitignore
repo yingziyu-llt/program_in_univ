@@ -15,3 +15,5 @@ data/
 .virtual_documents
 target/
 *.npz
+*.mp4
+
