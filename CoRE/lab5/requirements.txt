@@ -1,0 +1,6 @@
+torch==2.8.0
+numpy==1.26.4
+mani_skill==3.0.0b21
+nvidia-ml-py
+tensorboard
+wandb
