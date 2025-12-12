@@ -18,3 +18,8 @@ target/
 *.mp4
 .pixi/*
 !.pixi/config.toml
+*.h5ad
+*.rds
+*.rdata
+*.rdata.gz
+*.rhistory
