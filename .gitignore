@@ -16,4 +16,5 @@ data/
 target/
 *.npz
 *.mp4
-
+.pixi/*
+!.pixi/config.toml
