@@ -23,3 +23,4 @@ target/
 *.rdata
 *.rdata.gz
 *.rhistory
+*.pt

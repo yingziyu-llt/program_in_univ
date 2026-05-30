@@ -1,0 +1,159 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+\renewcommand\refname{参考文献} 
+
+\lstdefinestyle{Matlab}{
+    language        = matlab,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\name\\\ID}                 
+\chead{\textbf{\Large \hwtopic}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+
+
+\newcommand\course{FNLP 2026}
+\newcommand\hwtopic{Assignment 3}
+\newcommand\name{林乐天}
+\newcommand\ID{2300012154}
+
+\begin{document}
+
+\begin{center}
+    \LARGE
+    \bf
+    Multi-hop Evidence Retrieval
+\end{center}
+
+\section{实验任务}
+
+本次实验使用 MuSiQue 数据集做多跳证据检索。给定一个问题，系统需要从全局段落库中找出前 5 个相关段落。评价指标是 Recall@5，计算方式为前 5 个结果中命中的标准证据段落数除以该问题的标准证据段落总数，再对所有问题取平均。
+
+实验使用课程提供的数据处理结果。全局语料库共有 21100 个段落。测试集分为 2-hop、3-hop、4-hop 三组，每组 200 个问题。三组问题的标准证据段落数分别为 2、3、4，因此 hop 数越高，前 5 个返回结果中可出错的位置越少。
+
+\[
+\mathrm{Recall@5}(q)=\frac{|R_5(q)\cap G(q)|}{|G(q)|}
+\]
+
+\section{BM25 稀疏检索}
+
+BM25 是基于词项匹配的检索方法。它主要利用词频、逆文档频率和文档长度归一化来给段落打分。对于包含明确实体名的问题，BM25 往往有较好的表现，因为实体名、地名和作品名可以直接作为检索线索。
+
+代码位于 \texttt{scripts/run\_bm25.py}。实现中把每个段落写成 \texttt{title: text} 的形式参与索引，这样可以利用标题中的实体信息。文本预处理包括小写化、正则分词、去停用词和 Porter 词干化。每个问题检索前 5 个段落，预测文件保存在 \texttt{outputs/bm25/} 下。
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+方法 & 2-hop & 3-hop & 4-hop  \\
+\midrule
+BM25 & 0.4875 & 0.4133 & 0.2712 \\
+课程 baseline & 0.3700 & 0.2700 & 0.1500 \\
+\bottomrule
+\end{tabular}
+\caption{BM25 的 Recall@5 结果}
+\end{table}
+
+BM25 在三组数据上都高于课程 baseline。这个结果说明标题拼接和基本文本预处理对本任务有帮助。
+
+\section{Dense Retrieval 稠密检索}
+
+稠密检索使用预训练文本嵌入模型把问题和段落编码成向量，再用向量相似度检索段落。它对改写表达和语义相近的内容更敏感，适合处理词面重合较少的问题。
+
+代码位于 \texttt{scripts/build\_index.py} 和 \texttt{scripts/run\_dense.py}。本实验使用的模型是 \texttt{BAAI/bge-large-en-v1.5}。语料编码时同样使用 \texttt{title: text}。查询端加入前缀 \texttt{Represent this sentence for searching relevant passages: }。所有向量都做归一化，FAISS 索引使用 \texttt{IndexFlatIP}，此时内积可以看作余弦相似度。
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+方法 & 2-hop & 3-hop & 4-hop & 平均 \\
+\midrule
+Dense Retrieval & 0.6300 & 0.5050 & 0.2963 & 0.4771 \\
+课程 baseline & 0.6000 & 0.5300 & 0.3000 & 0.4767 \\
+\bottomrule
+\end{tabular}
+\caption{Dense Retrieval 的 Recall@5 结果}
+\end{table}
+
+Dense Retrieval 的平均 Recall@5 为 0.4771，略高于课程 baseline 的 0.4767。分组来看，2-hop 高于 baseline，3-hop 和 4-hop 略低一些。整体平均结果达到了要求。
+
+\section{结果分析}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+方法 & 2-hop & 3-hop & 4-hop & 平均 \\
+\midrule
+BM25 & 0.4875 & 0.4133 & 0.2712 & 0.3907 \\
+Dense Retrieval & 0.6300 & 0.5050 & 0.2963 & 0.4771 \\
+差值 & 0.1425 & 0.0917 & 0.0250 & 0.0864 \\
+\bottomrule
+\end{tabular}
+\caption{两种方法的结果对比}
+\end{table}
+
+Dense Retrieval 在三组测试集上都高于 BM25。主要原因是多跳问题常有较多改写，直接词项重合并不稳定。稠密向量可以利用语义相似度找回一些词面不同的段落。
+
+两种方法都会随 hop 数增加而下降。2-hop 只需要在前 5 个结果中覆盖 2 个证据段落，4-hop 则需要尽量覆盖 4 个证据段落，难度明显更高。只要其中一个中间实体没有召回，整个问题的 Recall 就会下降。
+
+从零命中数量看，Dense Retrieval 也更稳定。2-hop 中 BM25 有 36 个问题完全没有命中标准证据，Dense 有 14 个。3-hop 中二者分别为 31 和 14。4-hop 中二者分别为 48 和 34。这说明 Dense Retrieval 较少出现前 5 个结果全错的情况。
+
+\section{案例分析}
+
+\subsection{BM25 表现较好的例子}
+
+问题为 \texttt{What is the capital of the county where Fort Deposit is located?}。标准段落是 \texttt{Fort Deposit, Alabama} 和 \texttt{Hayneville, Alabama}。BM25 的 Recall 为 1.0，Dense 的 Recall 为 0.5。
+
+这个问题包含清楚的地点名。第一个标准段落中有 \texttt{Fort Deposit} 和 \texttt{Lowndes County}，第二个标准段落中有 \texttt{county seat of Lowndes County}。BM25 能直接利用这些词面线索找回两个段落。Dense 只命中第一个段落，后面的结果被其他地名段落干扰。
+
+另一个例子是 \texttt{What forced the departure from the country responsible for Phoe Pyonn Cho of the people once defied by new coinage?}。BM25 命中了 \texttt{Phoe Pyonn Cho} 和 \texttt{Ottoman Empire} 两个标准段落，Dense 没有命中标准段落。这里的 \texttt{Phoe Pyonn Cho} 是罕见实体，词面匹配很有用。
+
+\subsection{Dense Retrieval 表现较好的例子}
+
+问题为 \texttt{When did the crowning of the person under whom the Chapter House was built happen?}。标准段落是两个 \texttt{Westminster Abbey} 相关段落。BM25 的 Recall 为 0，Dense 的 Recall 为 1.0。
+
+BM25 被 \texttt{crowning} 这样的表面词带到了 \texttt{A Crown of Swords} 等无关段落。Dense Retrieval 找到了 \texttt{Chapter House}、\texttt{Henry III} 和加冕相关信息所在的段落，因此覆盖了两个标准证据。
+
+另一个例子是 \texttt{When was the Palau de la Generalitat constructed in the city where Martin from where Jaulin is located died?}。Dense Retrieval 命中了 \texttt{Jaulín}、\texttt{Martin of Aragon} 和 \texttt{Gothic architecture} 三个标准段落，BM25 没有命中。这个问题需要沿着地点、人物和建筑信息查找，词面线索比较分散，向量检索更容易找到相关段落。
+
+\section{总结}
+
+本实验完成了 BM25 和 Dense Retrieval 两种检索方法。BM25 的三组 Recall@5 为 0.4875、0.4133、0.2712，平均为 0.3907。Dense Retrieval 的三组 Recall@5 为 0.6300、0.5050、0.2963，平均为 0.4771。
+
+Dense Retrieval 的总体结果更好，说明预训练嵌入模型对多跳证据检索有帮助。BM25 在包含明确实体名的问题上仍有价值。后续如果继续改进，可以尝试把 BM25 和 Dense 的候选结果合并，再用重排序模型筛选前 5 个段落。
+
+\end{document}
